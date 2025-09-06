@@ -91,10 +91,70 @@ async function loadMonster() {
       ${monster.legendary.map(a => `
         <p><strong><em>${a.name}.</em></strong> ${a.desc}</p>
       `).join("")}
-    ` : ""}
+    ` : ""} `;
 
-    ${monster.description ? `<p>${monster.description}</p>` : ""}
-  `;
+// Add description, lair actions, and regional effects outside the stat block
+if (
+  monster.description ||
+  monster.lairactions?.length ||
+  monster.regionaleffects?.length
+) {
+  const outsideContainer = document.createElement("div");
+  outsideContainer.style.background = "transparent"; // optional
+  outsideContainer.style.border = "none";           // optional
+
+  let outsideHTML = "";
+
+  // Monster description
+  if (monster.description) {
+    outsideHTML += `<p>${monster.description.replace(/\n/g, "<br>")}</p>`;
+  }
+
+  // Lair Actions
+  if (monster.lairactions?.length) {
+    const lair = monster.lairactions[0];
+    outsideHTML += `<h3>Lair Actions</h3>`;
+
+    if (lair.description) {
+      outsideHTML += `<p>${lair.description.replace(/\n/g, "<br>")}</p>`;
+    }
+
+    if (lair.bullets?.length) {
+      outsideHTML += "<ul>";
+      lair.bullets.forEach(b => {
+        outsideHTML += `<li>${b}</li>`;
+      });
+      outsideHTML += "</ul>";
+    }
+  }
+
+  // Regional Effects
+  if (monster.regionaleffects?.length) {
+    const regional = monster.regionaleffects[0];
+    outsideHTML += `<h3>Regional Effects</h3>`;
+
+    if (regional.description) {
+      outsideHTML += `<p>${regional.description.replace(/\n/g, "<br>")}</p>`;
+    }
+
+    if (regional.bullets?.length) {
+      outsideHTML += "<ul>";
+      regional.bullets.forEach(b => {
+        outsideHTML += `<li>${b}</li>`;
+      });
+      outsideHTML += "</ul>";
+    }
+
+    // Secondary description after bullet points
+    if (regional.secondaryDescription) {
+      outsideHTML += `<p>${regional.secondaryDescription.replace(/\n/g, "<br>")}</p>`;
+    }
+  }
+
+  // Insert the container after the stat block
+  outsideContainer.innerHTML = outsideHTML;
+  container.insertAdjacentElement("afterend", outsideContainer);
+	}
 }
 
 loadMonster();

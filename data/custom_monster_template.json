@@ -55,5 +55,26 @@
             "name": "Chop",
             "desc": "The template takes the Scimitar action."
         }
+    ],
+	"description": "The quick brown fox jumped over the lazy dog.",
+	"lairactions": [
+  {
+    "description": "While in its lair, the creature can invoke dangerous effects.",
+    "bullets": [
+      "The creature causes poisonous gas to seep into the lair. Each hostile creature must succeed on a DC 15 Constitution saving throw or take 14 (4d6) poison damage.",
+      "The creature summons Quasits that fight until the start of its next turn.",
+      "The lair trembles violently; each creature on the ground must succeed on a DC 15 Dexterity saving throw or be knocked prone."
     ]
+  }
+],
+	"regionaleffects": [
+  {
+    "description": "The region containing a template’s lair is warped by the creature’s presence, which creates one or more of the following effects:",
+    "bullets": [
+      "Underground surfaces within 1 mile of the template’s lair are slimy and wet and are difficult terrain.",
+      "Water sources within 1 mile of the lair are supernaturally fouled. Enemies of the template that drink such water vomit it within minutes."
+    ],
+	"secondaryDescription": "If the template dies, the effects fade over the course of 3d10 days."
+  }
+]
 }
