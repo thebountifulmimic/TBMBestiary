@@ -1,0 +1,10 @@
+[
+  {
+    "name": "Template",
+    "file": "custom_monster_template.json"
+  },
+  {
+    "name": "Goblin",
+    "file": "goblin.json"
+  }
+]
