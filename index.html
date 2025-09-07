@@ -1,26 +1,42 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Bestiary</title>
+  <title>TBM Bestiary</title>
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
   <div class="wrapper">
+
     <h1>TBM Bestiary</h1>
 
-    <!-- Creature Types Header -->
-    <nav id="creature-types"></nav>
+    <!-- =========================
+         Search Bar
+         ========================= -->
+    <input type="text" id="search" placeholder="Search monsters...">
 
-    <!-- All Creatures Heading -->
-    <h2>All Creatures</h2>
+    <!-- =========================
+         Type Filters
+         ========================= -->
+    <nav id="creature-types" class="filter-bar"></nav>
 
-    <!-- Search Bar -->
-    <input type="text" id="search" placeholder="Search creatures by name...">
+    <!-- =========================
+         Source Filters
+         ========================= -->
+    <nav id="source-filters" class="filter-bar"></nav>
 
-    <!-- Monster List -->
+    <!-- =========================
+         CR Filters
+         ========================= -->
+    <nav id="cr-filters" class="filter-bar"></nav>
+
+    <!-- =========================
+         Monster List
+         ========================= -->
     <div id="monster-list"></div>
+
   </div>
+
   <script src="js/index.js"></script>
 </body>
 </html>
