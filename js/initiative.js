@@ -209,36 +209,42 @@ addBlankButton.addEventListener("click", () => {
     // -----------------------------
     // Render Monster List
     // -----------------------------
-    function renderList(data) {
-      listEl.innerHTML = "";
-      let currentCR = null;
+ function renderList(data) {
+  listEl.innerHTML = ""; // Clear table body
 
-      data.forEach(m => {
-        const crVal = isNaN(m._crSortValue) ? "Undefined" : m._cleanCR;
+  data.forEach(monster => {
+    const tr = document.createElement("tr");
 
-        if (crVal !== currentCR) {
-          currentCR = crVal;
-          const heading = document.createElement("h3");
-          heading.textContent = crVal === "Undefined" ? "CR Undefined" : `CR ${crVal}`;
-          listEl.appendChild(heading);
-        }
+    // Get Source = last tag
+    const source = monster.tags && monster.tags.length > 0
+      ? monster.tags[monster.tags.length - 1]
+      : "Unknown";
 
-        const li = document.createElement("div");
-        li.className = "monster-link";
+    tr.innerHTML = `
+      <td class="creature-name">${monster._displayName || monster.name || monster._file}</td>
+      <td>${monster.type || "—"}</td>
+      <td>${monster._cleanCR || "—"}</td>
+      <td>${source}</td>
+    `;
 
-        const link = document.createElement("a");
-        link.href = "#";
-        link.textContent = m._displayName || m.name || m._file;
-        link.monsterRef = m; // store monster object directly
+    // Add event handlers
+    tr.addEventListener("mouseenter", () => {
+      if (!statBlockLocked) displayStatBlock(monster);
+    });
+    tr.addEventListener("mouseleave", () => {
+      if (!statBlockLocked) statBlockContainer.innerHTML = "";
+    });
+    tr.addEventListener("click", (e) => {
+      e.preventDefault();
+      addToTracker(monster);
+      statBlockLocked = true;
+      lockedMonster = monster;
+      displayStatBlock(monster);
+    });
 
-        li.appendChild(link);
-        listEl.appendChild(li);
-      });
-
-      // Attach hover & click events
-      attachStatBlockEvents();
-    }
-
+    listEl.appendChild(tr);
+  });
+}
     // -----------------------------
     // Display monster stat block
     // -----------------------------
@@ -319,10 +325,6 @@ function attachStatBlockEvents() {
     });
   });
 }
-
-
-
-
     // -----------------------------
     // Add monster to initiative tracker
     // -----------------------------
@@ -409,12 +411,6 @@ function addToTracker(monster) {
   trackerBody.appendChild(row);
 }
 
-
-
-
-
-
-
     // -----------------------------
     // Initial render
     // -----------------------------
@@ -423,6 +419,73 @@ function addToTracker(monster) {
   } catch (err) {
     console.error("Failed to load monsters:", err);
   }
+  
+// -----------------------------
+// Resizers (LEFT & RIGHT handles)
+// -----------------------------
+document.querySelectorAll('.resizer').forEach((handle) => {
+  const left = handle.previousElementSibling;
+  const right = handle.nextElementSibling;
+  if (!left || !right) return; // guard
+
+  let startX = 0;
+  let startLeftW = 0;
+  let startRightW = 0;
+
+  const onMouseDown = (e) => {
+    e.preventDefault(); // <-- prevents native drag/text selection jumps
+    startX = e.clientX;
+
+    // robust measurement even if flex-basis is 'auto'
+    startLeftW = left.getBoundingClientRect().width;
+    startRightW = right.getBoundingClientRect().width;
+
+    document.addEventListener('mousemove', onMouseMove);
+    document.addEventListener('mouseup', onMouseUp);
+
+    document.body.style.cursor = 'col-resize';
+    left.style.userSelect = 'none';
+    right.style.userSelect = 'none';
+    left.style.pointerEvents = 'none';
+    right.style.pointerEvents = 'none';
+  };
+
+  const onMouseMove = (e) => {
+    const dx = e.clientX - startX;
+
+    const minLeft = parseFloat(getComputedStyle(left).minWidth) || 150;
+    const minRight = parseFloat(getComputedStyle(right).minWidth) || 150;
+
+    // Move boundary by dx (left grows when dx>0)
+    let newLeft = Math.max(minLeft, startLeftW + dx);
+    let newRight = Math.max(minRight, startRightW - dx);
+
+    // preserve original total width to avoid layout creep
+    const total = startLeftW + startRightW;
+    if (Math.round(newLeft + newRight) !== Math.round(total)) newRight = total - newLeft;
+
+    // Lock both panels to explicit pixel widths so they don't switch to auto
+    left.style.flex = `0 0 ${newLeft}px`;
+    right.style.flex = `0 0 ${newRight}px`;
+  };
+
+  const onMouseUp = () => {
+    document.removeEventListener('mousemove', onMouseMove);
+    document.removeEventListener('mouseup', onMouseUp);
+
+    document.body.style.removeProperty('cursor');
+    left.style.removeProperty('user-select');
+    right.style.removeProperty('user-select');
+    left.style.removeProperty('pointer-events');
+    right.style.removeProperty('pointer-events');
+  };
+
+  handle.addEventListener('mousedown', onMouseDown);
+});
+
+
 }
 
 loadMonsters();
+
+
