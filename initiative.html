@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Initiative Tracker</title>
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    /* Full screen layout for initiative tracker */
+    body, html {
+      height: 100%;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      font-family: 'Bookmania', Georgia, serif;
+    }
+
+    .panel {
+      padding: 1rem;
+      overflow-y: auto;
+    }
+
+    #left-panel {
+      width: 25%;
+      border-right: 2px solid #FFBF00;
+    }
+
+    #middle-panel {
+      width: 40%;
+      border-right: 2px solid #FFBF00;
+    }
+
+    #right-panel {
+      width: 35%;
+    }
+
+    /* Checkboxes inline */
+    .filter-group {
+      display: flex;
+      flex-wrap: wrap;
+      margin-bottom: 0.5rem;
+    }
+
+    .filter-group label {
+      margin-right: 1rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      font-size: 0.9rem;
+    }
+
+    .filter-group input[type="checkbox"] {
+      margin-right: 0.3rem;
+    }
+
+    /* Monster list */
+    #monster-list {
+      margin-top: 1rem;
+    }
+    .monster-link {
+      cursor: pointer;
+      margin: 0.2rem 0.5rem 0.2rem 0;
+    }
+    .monster-link:hover {
+      color: #FFBF00;
+    }
+
+    /* Tracker table */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    th, td {
+      border: 1px solid #888;
+      padding: 0.3rem;
+      text-align: center;
+    }
+    input[type="number"], input[type="text"] {
+      width: 80%;
+    }
+    .remove-btn {
+      cursor: pointer;
+      background: #492468;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      padding: 0.2rem 0.5rem;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Left Panel: Filters + Monster List -->
+  <div id="left-panel" class="panel">
+<a id="go-back-btn" href="index.html" class="panel-button">⬅ Go Back</a>
+    <input id="search" type="text" placeholder="Search by name">
+
+    <h4>Type</h4>
+    <div id="type-filters" class="filter-group"></div>
+
+    <h4>CR</h4>
+    <div id="cr-filters" class="filter-group"></div>
+
+    <h4>Source</h4>
+    <div id="source-filters" class="filter-group"></div>
+
+    <h4>Monsters</h4>
+    <div id="monster-list"></div>
+  </div>
+
+ <!-- Middle Panel: Initiative Tracker -->
+<div id="middle-panel" class="panel">
+  <h2>
+    Initiative Tracker
+    <button id="roll-initiative-btn" style="margin-left: 1rem;">Roll Initiative</button>
+    <button id="sort-initiative-btn" style="margin-left: 0.5rem;">Sort by Initiative</button>
+    <button id="add-blank-btn" style="margin-left: 0.5rem;">Add Blank Entry</button>
+  </h2>
+  <table id="initiative-table">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Initiative</th>
+        <th>AC</th>
+        <th>HP</th>
+        <th>Notes</th>
+        <th>Remove</th>
+      </tr>
+    </thead>
+    <tbody id="tracker-body"></tbody>
+  </table>
+</div>
+
+
+
+  <!-- Right Panel: Stat Block -->
+  <div id="right-panel" class="panel">
+    <div id="stat-block"></div>
+  </div>
+
+  <script src="js/initiative.js"></script>
+</body>
+</html>

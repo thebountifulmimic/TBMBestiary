@@ -256,6 +256,8 @@ strong em {
 }
 .monster-link {
   margin: 0.3rem 0;
+  display: block;
+  
 }
 .monster-link a {
   font-family: 'Bookmania', Georgia, serif;
@@ -268,3 +270,49 @@ strong em {
 .monster-link a:hover {
   color: #FFBF00;
 }
+.filter-button {
+  cursor: pointer;
+  padding: 2px 6px;
+  margin: 2px;
+  border: 1px solid #888;
+  border-radius: 4px;
+  display: inline-block;
+}
+.filter-button.active {
+  background: #444;
+  color: #fff;
+}
+/* Make checkbox groups flow horizontally */
+.filter-group label {
+  display: inline-flex;       /* inline with the next item */
+  align-items: center;        /* vertically align checkbox and text */
+  margin-right: 1rem;         /* space between items */
+  font-family: 'Bookmania', Georgia, serif;
+  font-size: 0.95rem;
+  color: #492468;
+}
+
+.filter-group input[type="checkbox"] {
+  margin-right: 0.25rem;      /* small gap between checkbox and text */
+}
+.filter-group {
+  display: flex;
+  flex-wrap: wrap;
+  margin-bottom: 0.5rem;
+}
+#go-back-btn {
+  display: block;
+  margin: 10px 0;
+  padding: 6px 10px;
+  font-size: 14px;
+  cursor: pointer;
+  background-color: #f0f0f0;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+#go-back-btn:hover {
+  background-color: #e0e0e0;
+}
+
+
