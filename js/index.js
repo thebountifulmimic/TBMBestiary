@@ -1,16 +1,42 @@
 // -----------------------------
-// URL Redirect
+// Pretty URL Handling
 // -----------------------------
-(function handlePrettyURL() {
-  // Example: /Goblin → "Goblin"
-  const path = window.location.pathname.replace(/^\/+|\/+$/g, ""); 
+(async function handlePrettyURL() {
+  const path = window.location.pathname.replace(/^\/+|\/+$/g, ""); // e.g. "goblin"
 
-  // If the path exists and isn’t a file like index.html
+  // If the path points to a specific monster (not index.html)
   if (path && !path.endsWith(".html")) {
-    // Redirect client-side to monster.html?file=NAME.json
-    window.location.href = `/monster.html?file=${encodeURIComponent(path + ".json")}`;
+    try {
+      // Dynamically load the monster JSON
+      const res = await fetch(`/data/${encodeURIComponent(path)}.json`);
+      if (!res.ok) throw new Error(`Monster not found: ${path}`);
+      const monster = await res.json();
+
+      // Replace page content with monster view
+      document.body.innerHTML = `
+        <div class="monster-container">
+          <h1>${monster.name || path}</h1>
+          <p><strong>Type:</strong> ${monster.type || "Unknown"}</p>
+          <p><strong>CR:</strong> ${monster.cr || "?"}</p>
+          <hr>
+          <div id="monster-details"></div>
+          <a href="/">← Back to all monsters</a>
+        </div>
+      `;
+
+      // You can render more fields from the monster JSON here
+      return; // Stop normal index rendering
+    } catch (err) {
+      console.error(err);
+      document.body.innerHTML = `<h1>Monster not found</h1><a href="/">← Back</a>`;
+      return;
+    }
   }
+
+  // If not a monster path, continue to load the normal list
+  loadMonsters();
 })();
+
 
 // -----------------------------
 // CR Parsing Helpers
@@ -213,6 +239,5 @@ async function loadMonsters() {
   }
 }
 
-loadMonsters();
 
 
