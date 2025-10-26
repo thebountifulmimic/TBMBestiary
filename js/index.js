@@ -1,41 +1,14 @@
 // -----------------------------
-// Pretty URL Handling
+// Cosmetic Pretty URL Handling
 // -----------------------------
-(async function handlePrettyURL() {
-  const path = window.location.pathname.replace(/^\/+|\/+$/g, ""); // e.g. "goblin"
+function handlePrettyURL() {
+  // If we navigated directly to monster.html, keep normal behavior
+  if (window.location.pathname.endsWith("monster.html")) return;
 
-  // If the path points to a specific monster (not index.html)
-  if (path && !path.endsWith(".html")) {
-    try {
-      // Dynamically load the monster JSON
-      const res = await fetch(`/data/${encodeURIComponent(path)}.json`);
-      if (!res.ok) throw new Error(`Monster not found: ${path}`);
-      const monster = await res.json();
-
-      // Replace page content with monster view
-      document.body.innerHTML = `
-        <div class="monster-container">
-          <h1>${monster.name || path}</h1>
-          <p><strong>Type:</strong> ${monster.type || "Unknown"}</p>
-          <p><strong>CR:</strong> ${monster.cr || "?"}</p>
-          <hr>
-          <div id="monster-details"></div>
-          <a href="/">← Back to all monsters</a>
-        </div>
-      `;
-
-      // You can render more fields from the monster JSON here
-      return; // Stop normal index rendering
-    } catch (err) {
-      console.error(err);
-      document.body.innerHTML = `<h1>Monster not found</h1><a href="/">← Back</a>`;
-      return;
-    }
-  }
-
-  // If not a monster path, continue to load the normal list
+  // Otherwise, just load the normal monster list
   loadMonsters();
-})();
+}
+handlePrettyURL();
 
 
 // -----------------------------
@@ -224,7 +197,18 @@ async function loadMonsters() {
 
         const li = document.createElement("div");
         li.className = "monster-link";
-        li.innerHTML = `<a href="/${encodeURIComponent(m._file.replace('.json', ''))}">${m._displayName || m.name || m._file}</a>`;
+        const displayName = m._displayName || m.name || m._file.replace(/\.json$/, "");
+        const file = m._file;
+        
+        li.innerHTML = `<a href="monster.html?file=${encodeURIComponent(file)}">${displayName}</a>`;
+        
+        // Intercept click to make the URL look pretty
+        li.querySelector("a").addEventListener("click", (event) => {
+          event.preventDefault();
+          history.pushState({}, "", `/${displayName}`);
+          window.location.href = `monster.html?file=${encodeURIComponent(file)}`;
+        });
+
         listEl.appendChild(li);
       });
     }
@@ -238,6 +222,7 @@ async function loadMonsters() {
     console.log("Finished attempting to load monsters");
   }
 }
+
 
 
 
