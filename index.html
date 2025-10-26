@@ -5,103 +5,132 @@
   <title>TBM Project Landing</title>
   <link rel="stylesheet" href="css/style.css">
   <style>
-    /* Landing page specific styles */
     body {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      min-height: 100vh;
-      background-image: url("https://i.imgur.com/8XflKRc.png"); /* keeps your background */
+      font-family: 'Bookmania', Georgia, serif;
+      background-image: url("https://i.imgur.com/8XflKRc.png");
       background-attachment: fixed;
       background-size: cover;
+      color: #2c2c2c;
+      margin: 0;
+      padding: 0;
     }
 
-    .landing-wrapper {
+    header {
       text-align: center;
-      max-width: 900px;
-      padding: 2rem;
-      background: rgba(255, 255, 255, 0.95);
-      border-radius: 15px;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+      padding: 2rem 1rem;
     }
 
-    .landing-wrapper .logo {
+    header img.logo {
       width: 120px;
       margin-bottom: 1rem;
     }
 
-    h1 {
+    header h1 {
       font-family: 'AlmendraSC', Georgia, serif;
       font-weight: 700;
       color: #492468;
-      margin-bottom: 0.5rem;
       font-size: 2.5rem;
+      margin-bottom: 0.5rem;
     }
 
-    p {
-      font-family: 'Bookmania', Georgia, serif;
-      color: #2c2c2c;
-      margin-bottom: 2rem;
+    header p {
       font-size: 1.2rem;
+      margin-bottom: 2rem;
+      color: #2c2c2c;
     }
 
-    .buttons-container {
+    .module-wrapper {
       display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 1.5rem;
-    }
-
-    .buttons-container button {
-      display: flex;
+      flex-direction: column;
       align-items: center;
-      gap: 0.5rem;
+      margin: 2rem auto;
+      max-width: 800px;
+      background: rgba(255,255,255,0.9);
+      border-radius: 15px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+      overflow: hidden;
+      transition: transform 0.2s ease;
+    }
+
+    .module-wrapper:hover {
+      transform: translateY(-5px);
+    }
+
+    .module-wrapper img {
+      width: 100%;
+      max-height: 300px;
+      object-fit: cover;
+    }
+
+    .module-content {
+      padding: 1.5rem;
+      text-align: center;
+    }
+
+    .module-content h2 {
+      font-family: 'AlmendraSC', Georgia, serif;
+      font-size: 2rem;
+      color: #492468;
+      margin-bottom: 1rem;
+    }
+
+    .module-content p {
+      font-size: 1.1rem;
+      margin-bottom: 1.5rem;
+      color: #2c2c2c;
+    }
+
+    .module-content button {
+      font-family: 'Bookmania', Georgia, serif;
       padding: 10px 20px;
       font-size: 1rem;
-    }
-
-    .buttons-container img {
-      width: 24px;
-      height: 24px;
+      cursor: pointer;
     }
 
     @media (max-width: 600px) {
-      .buttons-container {
-        flex-direction: column;
-        gap: 1rem;
-      }
-      .buttons-container button {
-        width: 100%;
-        justify-content: center;
+      .module-wrapper {
+        margin: 1rem;
       }
     }
   </style>
 </head>
 <body>
-  <div class="landing-wrapper">
+
+  <header>
     <img class="logo" src="images/TBMLogo.png" alt="TBM Logo">
-    <h1>Welcome to TBM Project</h1>
+    <h1>Welcome to The Bountiful Mimic</h1>
     <p>Explore our tools, resources, and interactive modules for managing your tabletop adventures.</p>
+  </header>
 
-    <div class="buttons-container">
-      <button>
-        <a class="nav-link" href="bestiary.html">
-          <img src="images/bestiary-icon.png" alt="Bestiary"> Bestiary
-        </a>
-      </button>
-
-      <button>
-        <a class="nav-link" href="initiative.html">
-          <img src="images/initiative-icon.png" alt="Initiative Tracker"> Initiative Tracker
-        </a>
-      </button>
-
-      <button>
-        <a class="nav-link" href="index.html">
-          <img src="images/home.png" alt="Home"> Home
-        </a>
-      </button>
+  <!-- Bestiary Module -->
+  <div class="module-wrapper">
+    <img src="images/bestiary-banner.png" alt="Bestiary Banner">
+    <div class="module-content">
+      <h2>Bestiary</h2>
+      <p>Browse a rich compendium of monsters, creatures, and NPCs for your adventures. Search, filter, and explore detailed stats and lore.</p>
+      <button><a class="nav-link" href="bestiary.html">Go to Bestiary</a></button>
     </div>
   </div>
+
+  <!-- Initiative Tracker Module -->
+  <div class="module-wrapper">
+    <img src="images/initiative-banner.png" alt="Initiative Tracker Banner">
+    <div class="module-content">
+      <h2>Initiative Tracker</h2>
+      <p>Manage combat turns effortlessly with our initiative tracker. Keep your battles organized and fair for all players.</p>
+      <button><a class="nav-link" href="initiative.html">Go to Initiative Tracker</a></button>
+    </div>
+  </div>
+
+  <!-- Home Module -->
+  <div class="module-wrapper">
+    <img src="images/home-banner.png" alt="Home Banner">
+    <div class="module-content">
+      <h2>Home</h2>
+      <p>Return to the main landing page or explore other sections of the TBM project with ease.</p>
+      <button><a class="nav-link" href="index.html">Go Home</a></button>
+    </div>
+  </div>
+
 </body>
 </html>
