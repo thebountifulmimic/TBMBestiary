@@ -1,4 +1,18 @@
 // -----------------------------
+// URL Redirect
+// -----------------------------
+(function handlePrettyURL() {
+  // Example: /Goblin → "Goblin"
+  const path = window.location.pathname.replace(/^\/+|\/+$/g, ""); 
+
+  // If the path exists and isn’t a file like index.html
+  if (path && !path.endsWith(".html")) {
+    // Redirect client-side to monster.html?file=NAME.json
+    window.location.href = `/monster.html?file=${encodeURIComponent(path + ".json")}`;
+  }
+})();
+
+// -----------------------------
 // CR Parsing Helpers
 // -----------------------------
 function parseCR(cr) {
@@ -200,4 +214,5 @@ async function loadMonsters() {
 }
 
 loadMonsters();
+
 
