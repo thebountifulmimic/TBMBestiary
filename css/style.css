@@ -137,10 +137,10 @@ button:link {
         .fixed-image {
             position: absolute;
             top: 20px; /* Adjust this to move image down or up */
-            left: -0px; /* Adjust this to move image left or right */
-            width: 150px; /* Adjust width for responsiveness */
+            left: 0px; /* Adjust this to move image left or right */
+            width: 200px; /* Adjust width for responsiveness */
             height: auto;
-            z-index: 1; /* Ensure it stays on top */
+            z-index: 5; /* Ensure it stays on top */
         }
 
 /* =========================
