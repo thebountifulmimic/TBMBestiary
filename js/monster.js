@@ -1,20 +1,9 @@
 async function loadMonster() {
-  // --- STEP 1: Try to get ?file=Monster.json (old URL style) ---
   const params = new URLSearchParams(window.location.search);
   let file = params.get("file"); // e.g. "goblin.json"
-
-  // --- STEP 2: If no ?file, use pretty URL path like /Goblin ---
-  if (!file) {
-    const path = window.location.pathname.split("/").filter(Boolean).pop();
-    if (path) file = `${path}.json`;
-  }
-
-  // --- STEP 3: If still nothing, show a friendly message ---
-  if (!file) {
-    document.getElementById("monster").innerHTML = `<h2>No monster specified</h2>`;
-    return;
-  }
-
+  const file = params.get("file"); // e.g. "goblin.json"
+  if (!file) return;
+  
   try {
     // Fetch the combined monsters.json
     const monsters = await fetch("data/monsters.json").then(r => {
@@ -26,14 +15,11 @@ async function loadMonster() {
     const monster = monsters.find(m => m._file === file);
     if (!monster) {
       console.error(`Monster ${file} not found`);
-      document.getElementById("monster").innerHTML = `<h2>Monster not found</h2>`;
       return;
     }
 
     const displayName = monster._displayName || monster.name || file.replace(".json", "");
     const container = document.getElementById("monster");
-
-    // --- The rest of your file stays exactly the same ---
 
 
     // Helper for ability score formatting
@@ -166,4 +152,3 @@ async function loadMonster() {
 }
 
 loadMonster();
-
