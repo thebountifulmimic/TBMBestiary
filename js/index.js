@@ -1,17 +1,4 @@
 // -----------------------------
-// Cosmetic Pretty URL Handling
-// -----------------------------
-function handlePrettyURL() {
-  // If we navigated directly to monster.html, keep normal behavior
-  if (window.location.pathname.endsWith("monster.html")) return;
-
-  // Otherwise, just load the normal monster list
-  loadMonsters();
-}
-handlePrettyURL();
-
-
-// -----------------------------
 // CR Parsing Helpers
 // -----------------------------
 function parseCR(cr) {
@@ -197,18 +184,7 @@ async function loadMonsters() {
 
         const li = document.createElement("div");
         li.className = "monster-link";
-        const displayName = m._displayName || m.name || m._file.replace(/\.json$/, "");
-        const file = m._file;
-        
-        li.innerHTML = `<a href="monster.html?file=${encodeURIComponent(file)}">${displayName}</a>`;
-        
-        // Intercept click to make the URL look pretty
-        li.querySelector("a").addEventListener("click", (event) => {
-          event.preventDefault();
-          history.pushState({}, "", `/${displayName}`);
-          window.location.href = `monster.html?file=${encodeURIComponent(file)}`;
-        });
-
+        li.innerHTML = `<a href="monster.html?file=${encodeURIComponent(m._file)}">${m._displayName || m.name || m._file}</a>`;
         listEl.appendChild(li);
       });
     }
@@ -222,6 +198,7 @@ async function loadMonsters() {
     console.log("Finished attempting to load monsters");
   }
 }
+
 
 
 
