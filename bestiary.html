@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>TBM Bestiary</title>
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    .nav-buttons {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1em;
+    }
+    .nav-buttons button {
+      padding: 0.5em 1em;
+      font-size: 1em;
+      cursor: pointer;
+      background-color: #f0f0f0;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+    .nav-buttons a {
+      text-decoration: none;
+      color: inherit;
+      display: flex;
+      align-items: center;
+    }
+    .home-button img {
+      width: 24px; /* size of the house icon */
+      height: 24px;
+    }
+  </style>
+</head>
+<body>
+  <div class="wrapper">
+
+    <h1>TBM Bestiary</h1>
+
+    <div class="nav-buttons">
+      <button><a class="nav-link" href="/initiative">Initiative Tracker</a></button>
+      <a class="home-button" href="/">
+        <img src="images/homeicon.png" alt="Home">
+      </a>
+    </div>
+
+    <!-- =========================
+         Search Bar
+         ========================= -->
+    <input type="text" id="search" placeholder="Search monsters...">
+
+    <!-- =========================
+         Type Filters
+         ========================= -->
+    <nav id="creature-types" class="filter-bar"></nav>
+
+    <!-- =========================
+         Source Filters
+         ========================= -->
+    <nav id="source-filters" class="filter-bar"></nav>
+
+    <!-- =========================
+         CR Filters
+         ========================= -->
+    <nav id="cr-filters" class="filter-bar"></nav>
+
+    <!-- =========================
+         Monster List
+         ========================= -->
+    <div id="monster-list"></div>
+
+  </div>
+
+  <script src="js/index.js"></script>
+</body>
+</html>
