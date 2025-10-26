@@ -55,8 +55,8 @@
    GLOBAL STYLES
    ========================= */
 body {
+  background-image: url("https://i.imgur.com/dvNnih0.png");
   font-family: 'Bookmania', Georgia, serif;
-  background-image: url("https://i.imgur.com/8XflKRc.png");
   background-attachment: fixed;
   background-size: cover;
   color: #2c2c2c;
