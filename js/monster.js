@@ -1,9 +1,8 @@
 async function loadMonster() {
   const params = new URLSearchParams(window.location.search);
-  let file = params.get("file"); // e.g. "goblin.json"
   const file = params.get("file"); // e.g. "goblin.json"
   if (!file) return;
-  
+
   try {
     // Fetch the combined monsters.json
     const monsters = await fetch("data/monsters.json").then(r => {
@@ -19,8 +18,8 @@ async function loadMonster() {
     }
 
     const displayName = monster._displayName || monster.name || file.replace(".json", "");
-    const container = document.getElementById("monster");
 
+    const container = document.getElementById("monster");
 
     // Helper for ability score formatting
     const formatAbility = (score) => {

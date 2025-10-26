@@ -184,7 +184,7 @@ async function loadMonsters() {
 
         const li = document.createElement("div");
         li.className = "monster-link";
-        li.innerHTML = `<a href="/${encodeURIComponent(m._file.replace('.json', ''))}">${m._displayName || m.name || m._file}</a>`;
+        li.innerHTML = `<a href="monster.html?file=${encodeURIComponent(m._file)}">${m._displayName || m.name || m._file}</a>`;
         listEl.appendChild(li);
       });
     }
@@ -199,8 +199,4 @@ async function loadMonsters() {
   }
 }
 
-
-
-
-
-
+loadMonsters();
