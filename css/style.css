@@ -63,6 +63,32 @@ body {
   line-height: 1.5;
 }
 
+/* Global button style */
+button {
+  background-color: #492468;
+  color: #fff;
+  border: none;
+  border-radius: 9999px; /* pill shape */
+  padding: 6px 14px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+button:hover {
+  background-color: #6a359c; /* lighter purple on hover */
+}
+
+button:link {
+  color: #fff;
+}
+
+.nav-link:link,
+.nav-link:visited {
+  color: #fff;
+}
+
+
 .wrapper {
   width: 100%;
   max-width: none;
@@ -80,8 +106,6 @@ body {
    STAT BLOCK
    ========================= */
 .stat-block {
-  border: 1px solid #999;
-  background: #EAEDEF; /* stat block background */
   padding-bottom: 1rem;
   padding-top: 0.25rem;
   padding-right: 1rem;
@@ -309,13 +333,15 @@ strong em {
 }
 #go-back-btn {
   display: block;
-  margin: 10px 0;
-  padding: 6px 10px;
+  width: fit-content;   
+  margin: 10px auto;   
+  padding: 6px 14px;  
   font-size: 14px;
   cursor: pointer;
-  background-color: #f0f0f0;
+  background-color: #dbdbdb;
   border: 1px solid #ccc;
   border-radius: 4px;
+  text-align: center; 
 }
 
 #go-back-btn:hover {
@@ -368,8 +394,9 @@ strong em {
 
 .initiative-table {
   width: 100%;
-  table-layout: fixed;  /* fixes column widths */
+  table-layout: auto;
   border-collapse: collapse;
+  border-radius: 12px;   
 }
 
 .initiative-table th,
@@ -381,36 +408,6 @@ strong em {
   text-overflow: ellipsis;
   white-space: nowrap;
   box-sizing: border-box;
-}
-
-.initiative-table th:nth-child(1),
-.initiative-table td:nth-child(1) {
-  width: 40%; /* Name */
-}
-
-.initiative-table th:nth-child(2),
-.initiative-table td:nth-child(2) {
-  width: 15%; /* Init */
-}
-
-.initiative-table th:nth-child(3),
-.initiative-table td:nth-child(3) {
-  width: 10%; /* AC */
-}
-
-.initiative-table th:nth-child(4),
-.initiative-table td:nth-child(4) {
-  width: 10%; /* HP */
-}
-
-.initiative-table th:nth-child(5),
-.initiative-table td:nth-child(5) {
-  width: 15%; /* Notes */
-}
-
-.initiative-table th:nth-child(6),
-.initiative-table td:nth-child(6) {
-  width: 10%; /* Remove button */
 }
 
 .initiative-table tbody tr:hover {
@@ -451,3 +448,106 @@ strong em {
   box-sizing: border-box;
 }
 
+/* Make rows display horizontally */
+.row {
+  display: flex;
+  gap: 10px; /* space between each ability */
+  flex-wrap: wrap; /* optional: allows wrapping on small screens */
+}
+
+/* Keep labels compact instead of full width */
+.row label {
+  display: flex;
+  flex-direction: column; /* keeps STR above the input */
+  align-items: center;
+  width: auto; /* prevents stretching */
+}
+/* ability inputs remain small and horizontal */
+.abilities-row input { 
+  width: 60px; 
+  text-align: center; 
+}
+
+/* All form inputs and textareas inside #monster-form */
+#monster-form input,
+#monster-form textarea {
+  width: 100%;            /* full width */
+  max-width: 500px;       /* optional max width */
+  padding: 8px 12px;      /* internal spacing */
+  margin: 4px 0 12px 0;   /* spacing between fields */
+  font-size: 14px;        /* readable text */
+  border: 2px solid #ccc; /* subtle border */
+  border-radius: 12px;    /* rounded corners */
+  outline: none;          /* remove default outline */
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+/* Focus effect */
+#monster-form input:focus,
+#monster-form textarea:focus {
+  border-color: #492468;          /* purple border on focus */
+  box-shadow: 0 0 6px rgba(73, 36, 104, 0.4); /* subtle glow */
+}
+
+/* Placeholder style */
+#monster-form input::placeholder,
+#monster-form textarea::placeholder {
+  color: #aaa;
+  font-style: italic;
+}
+
+#monster-form input.style-input,
+#tracker-body input.style-input,
+.initiative-table input.style-input {
+  border: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  background: #f2f2f2;
+  padding: 4px;
+  border-radius: 5px;
+  outline: none;
+  box-sizing: border-box;
+}
+
+/* Force all tracker/table inputs to same size and shrink properly */
+.style-input {
+  width: 100%;           /* fill the cell */
+  min-width: 0;          /* allow shrinking */
+  box-sizing: border-box;
+  padding: 2px 4px;
+  font-size: 14px;
+  text-align: center;    /* numbers centered */
+}
+
+#monster-form input.style-input:focus,
+#tracker-body input.style-input:focus {
+  border-color: rgba(73,36,104,0.6);
+  box-shadow: 0 0 6px rgba(73,36,104,0.25);
+}
+/* Make all table inputs fill their cell and scale with it */
+.initiative-table td .style-input {
+  width: 100%;         /* fill the cell */
+  box-sizing: border-box;
+  text-align: center;   /* default center */
+  padding: 4px;
+  min-width: 20px;      /* prevents shrinking too far */
+}
+.initiative-table td:nth-child(1) .style-input,
+.initiative-table td:nth-child(5) .style-input {
+  text-align: left; /* Name and Notes aligned left */
+}
+.initiative-table td:nth-child(2) .style-input,
+.initiative-table td:nth-child(3) .style-input,
+.initiative-table td:nth-child(4) .style-input {
+  width: 100%;          /* still fills cell but cell can shrink */
+  max-width: 60px;      /* optional max width for small numbers */
+  text-align: center;
+}
+.initiative-table td:nth-child(5) .style-input {
+  min-width: 10px;
+}
+.initiative-table th:nth-child(n),
+.initiative-table td:nth-child(n) {
+  width: auto;
+}

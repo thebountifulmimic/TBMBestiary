@@ -27,6 +27,12 @@ async function loadMonster() {
       const sign = mod >= 0 ? `+${mod}` : mod;
       return `${score} (${sign})`;
     };
+	
+	function formatTextWithItalics(text) {
+	  if (!text) return "";
+	  // Replace *something* with <em>something</em>
+	  return text.replace(/\*(.*?)\*/g, "<em>$1</em>");
+	}
 
     // Build the stat block
     container.innerHTML = `
@@ -88,10 +94,14 @@ async function loadMonster() {
 	}).join("") || ""}
 
 
-      ${monster.actions && monster.actions.length ? `
-        <h3>Actions</h3>
-        ${monster.actions.map(a => `<p><strong><em>${a.name}.</em></strong> ${a.desc}</p>`).join("")}
-      ` : ""}
+	${monster.actions && monster.actions.length ? `
+	  <h3>Actions</h3>
+	  ${monster.actions.map(a =>
+		`<p><strong><em>${a.name}.</em></strong> ${formatTextWithItalics(a.desc)}</p>`
+	  ).join("")}
+	` : ""}
+
+
 
       ${monster.reactions && monster.reactions.length ? `
         <h3>Reactions</h3>

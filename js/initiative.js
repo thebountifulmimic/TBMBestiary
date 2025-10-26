@@ -1,3 +1,9 @@
+let allMonsters = [];  // global copy of all monsters
+let lockedRow = null;
+let statBlockLocked = false;
+let lockedMonster = null;
+
+
 // -----------------------------
 // CR Parsing Helpers
 // -----------------------------
@@ -24,6 +30,7 @@ function cleanCR(cr) {
 async function loadMonsters() {
   try {
     const monsters = await fetch("data/monsters.json").then(r => r.json());
+	allMonsters = monsters;  // save globally for load/save
 
     monsters.forEach(m => {
       m._cleanCR = cleanCR(m.cr);
@@ -53,6 +60,7 @@ async function loadMonsters() {
     const searchEl = document.getElementById("search");
     const trackerBody = document.getElementById("tracker-body");
     const statBlockContainer = document.getElementById("stat-block");
+	
 
     const activeTypes = new Set();
     const activeCRs = new Set();
@@ -103,14 +111,13 @@ addBlankButton.addEventListener("click", () => {
   const row = document.createElement("tr");
 
   row.innerHTML = `
-    <td class="monster-name"><input type="text" value="Custom Entry" style="width: 100%;"></td>
-    <td><input type="number" value="0" style="width: 50px;"></td>
-    <td><input type="text" style="width: 50px;"></td>
-    <td><input type="text" style="width: 60px;"></td>
-    <td><input type="text" style="width: 100%;"></td>
+    <td class="monster-name"><input class="style-input" type="text" value="Custom Entry"></td>
+    <td><input class="style-input" type="number" value="0"></td>
+    <td><input class="style-input" type="text" value=""></td>
+    <td><input class="style-input" type="text" value=""></td>
+    <td><input class="style-input" type="text" value=""></td>
     <td><button class="remove-btn">Remove</button></td>
   `;
-
   // Remove button
   row.querySelector(".remove-btn").addEventListener("click", () => row.remove());
 
@@ -248,10 +255,6 @@ addBlankButton.addEventListener("click", () => {
     // -----------------------------
     // Display monster stat block
     // -----------------------------
-	let lockedRow = null; // track which tracker row is highlighted / locked
-	let statBlockLocked = false;
-	let lockedMonster = null;
-
     function displayStatBlock(monster) {
       const displayName = monster._displayName || monster.name || monster._file;
       const formatAbility = (score) => {
@@ -356,16 +359,17 @@ function addToTracker(monster) {
 
   row.innerHTML = `
     <td class="monster-name">${monster._displayName || monster.name}</td>
-    <td><input type="number" value="0" style="width: 50px;"></td>
-    <td>${monster.ac || "?"}</td>
+    <td><input class="style-input" type="number" value="0" width: 60px></td>
+	<td>${monster.ac || ""}</td>
     <td></td>
-    <td><input type="text" style="width: 100%;"></td>
+    <td><input class="style-input" type="text" value=""></td>
     <td><button class="remove-btn">Remove</button></td>
   `;
 
   const hpCell = row.querySelector("td:nth-child(4)");
   const hpInput = document.createElement("input");
   hpInput.type = "text";
+  hpInput.classList.add("style-input");
   hpInput.style.width = "60px";
   hpInput.value = startHP;
   hpInput.dataset.currentHp = startHP;
@@ -468,8 +472,8 @@ document.querySelectorAll('.resizer').forEach((handle) => {
   const onMouseMove = (e) => {
     const dx = e.clientX - startX;
 
-    const minLeft = parseFloat(getComputedStyle(left).minWidth) || 150;
-    const minRight = parseFloat(getComputedStyle(right).minWidth) || 150;
+	const minLeft = parseFloat(getComputedStyle(left).minWidth);
+	const minRight = parseFloat(getComputedStyle(right).minWidth);
 
     // Move boundary by dx (left grows when dx>0)
     let newLeft = Math.max(minLeft, startLeftW + dx);
@@ -480,9 +484,9 @@ document.querySelectorAll('.resizer').forEach((handle) => {
     if (Math.round(newLeft + newRight) !== Math.round(total)) newRight = total - newLeft;
 
     // Lock both panels to explicit pixel widths so they don't switch to auto
-    left.style.flex = `0 0 ${newLeft}px`;
-    right.style.removeProperty('flex');
-  };
+	left.style.flex = `0 0 ${newLeft}px`;
+	right.style.flex = `1 1 auto`; 
+  }
 
   const onMouseUp = () => {
     document.removeEventListener('mousemove', onMouseMove);
@@ -497,6 +501,147 @@ document.querySelectorAll('.resizer').forEach((handle) => {
 
   handle.addEventListener('mousedown', onMouseDown);
 });
+
+// Reference tracker table body
+const trackerBody = document.getElementById("tracker-body");
+
+// === SAVE TRACKER ===
+document.getElementById("save-tracker-btn").addEventListener("click", () => {
+  const rows = trackerBody.querySelectorAll("tr");
+  const trackerData = [];
+
+  rows.forEach(row => {
+    const cells = row.querySelectorAll("td");
+    trackerData.push({
+      name: cells[0].querySelector("input")?.value || cells[0].innerText,
+      initiative: cells[1].querySelector("input")?.value || "",
+	  ac: cells[2].querySelector("input")?.value ?? cells[2].textContent ?? "",
+      hp: cells[3].querySelector("input")?.value || "",
+      notes: cells[4].querySelector("input")?.value || "",
+      monsterId: row.dataset.monsterId || null
+    });
+  });
+
+  const blob = new Blob([JSON.stringify(trackerData, null, 2)], { type: "application/json" });
+  const url = URL.createObjectURL(blob);
+
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = "initiative_tracker.json";
+  a.click();
+
+  URL.revokeObjectURL(url);
+});
+ document.getElementById("load-tracker-btn").addEventListener("click", () => {
+    document.getElementById("load-tracker-input").click();
+  });
+// === LOAD TRACKER ===
+document.getElementById("load-tracker-input").addEventListener("change", (event) => {
+  const file = event.target.files?.[0];
+  if (!file) return;
+
+  const reader = new FileReader();
+  reader.onload = (e) => {
+    let trackerData;
+    try {
+      trackerData = JSON.parse(e.target.result.toString());
+    } catch (err) {
+      alert("Invalid tracker file (not JSON).");
+      return;
+    }
+
+    trackerBody.innerHTML = "";
+
+    trackerData.forEach(entry => {
+      let monster = null;
+
+      // ✅ use global allMonsters here
+      if (entry.monsterId) {
+        monster = allMonsters.find(m => String(m.id) === String(entry.monsterId));
+      }
+      if (!monster && entry.name) {
+        monster = allMonsters.find(m => (m._displayName || m.name || m._file) === entry.name);
+      }
+
+      if (monster) {
+        // Use existing addToTracker to keep event listeners/stat block linking
+        addToTracker(monster);
+        const row = trackerBody.lastElementChild;
+
+        // Restore saved values
+        const initInput = row.querySelector("td:nth-child(2) input");
+        if (initInput) initInput.value = entry.initiative ?? "";
+
+        const acCell = row.querySelector("td:nth-child(3)");
+        if (acCell) acCell.textContent = entry.ac ?? "";
+
+        const hpInput = row.querySelector("td:nth-child(4) input");
+        if (hpInput) {
+          hpInput.value = entry.hp ?? "";
+          hpInput.dataset.currentHp = entry.hp ?? "";
+        }
+
+        const notesInput = row.querySelector("td:nth-child(5) input");
+        if (notesInput) notesInput.value = entry.notes ?? "";
+
+        if (entry.monsterId) row.dataset.monsterId = entry.monsterId;
+
+      } else {
+        // No match → add a custom row (like Add Blank Entry)
+		const row = document.createElement("tr");
+		row.innerHTML = `
+		  <td class="monster-name">
+			<input class="style-input" type="text" value="${(entry.name || "Custom Entry").replace(/"/g,'&quot;')}">
+		  </td>
+		  <td>
+			<input class="style-input" type="number" value="${entry.initiative ?? 0}">
+		  </td>
+		  <td>
+			<input class="style-input" type="text" value="${entry.ac ?? ""}">
+		  </td>
+		  <td>
+			<input class="style-input" type="text" value="${entry.hp ?? ""}">
+		  </td>
+		  <td>
+			<input class="style-input" type="text" value="${entry.notes ?? ""}">
+		  </td>
+		  <td>
+			<button class="remove-btn">Remove</button>
+		  </td>
+		`;
+
+
+        row.querySelector(".remove-btn").addEventListener("click", () => row.remove());
+
+        // Optional: hover/click highlight like normal rows
+        const nameCell = row.querySelector(".monster-name");
+        nameCell.addEventListener("mouseenter", () => {
+          if (!lockedRow) nameCell.style.backgroundColor = "#ffd";
+        });
+        nameCell.addEventListener("mouseleave", () => {
+          if (!lockedRow) nameCell.style.backgroundColor = "";
+        });
+        nameCell.addEventListener("click", () => {
+          if (lockedRow === row) {
+            lockedRow = null;
+            nameCell.style.backgroundColor = "";
+          } else {
+            if (lockedRow) lockedRow.querySelector(".monster-name").style.backgroundColor = "";
+            lockedRow = row;
+            nameCell.style.backgroundColor = "#ffa";
+          }
+        });
+
+        trackerBody.appendChild(row);
+      }
+    });
+  };
+
+  reader.readAsText(file);
+});
+
+
+
 
 
 }
