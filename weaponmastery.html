@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weapon Mastery System</title>
+    <style>
+        @font-face {
+            font-family: 'Intro Rust';
+            src: url('fonts/IntroRust-Base.otf') format('truetype');
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            background-color: #1c1c1c;
+            color: white;
+            text-align: center;
+        }
+
+        .container {
+            background-color: #2c2c2c;
+            margin: 20px auto;
+            padding: 20px;
+            border-radius: 10px;
+            width: 80%;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+        }
+
+        h1 {
+            color: #ffcc00;
+            margin-bottom: 20px;
+            font-family: 'Intro Rust', Arial, sans-serif;
+        }
+
+        .image-container {
+            margin-top: 20px;
+        }
+
+        .dropdown-container {
+            margin-bottom: 20px;
+        }
+
+        table {
+            margin: 20px auto;
+            border-collapse: collapse;
+            width: 50%;
+            background-color: #3c3c3c;
+            color: white;
+        }
+
+        td, th {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: center;
+        }
+
+        th {
+            font-weight: bold;
+            background-color: #2c2c2c;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .fixed-image {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            width: 100px;
+        }
+
+        a {
+            color: #ffcc00;
+        }
+
+        .weapon-category {
+            font-style: italic;
+            margin-top: 5px;
+            color: #ccc;
+        }
+                ul li {
+            margin-bottom: 10px; /* Adjust this value for desired spacing */
+        }
+    </style>
+</head>
+<body>
+    <img src="images/LogoFinalGems.png" alt="Decoration Left" class="fixed-image">
+    <div class="container">
+        <h1>Weapon Mastery System</h1>
+
+        <!-- Dropdown Menu Section -->
+        <div class="dropdown-container">
+            <label for="weapons">Choose a weapon:</label>
+            <select id="weapons">
+                <option value="">--Select a Weapon--</option>
+                <option value="longsword">Longsword</option>
+                <option value="battleaxe">Battleaxe</option>
+                <option value="longbow">Longbow</option>
+                <option value="dagger">Dagger</option>
+                <option value="glaive">Glaive</option>
+                <option value="halberd">Halberd</option>
+                <option value="warpick">Warpick</option>
+                <option value="morningstar">Morningstar</option>
+                <option value="spear">Spear</option>
+                <option value="trident">Trident</option>
+                <option value="mace">Mace</option>
+                <option value="quarterstaff">Quarterstaff</option>
+                <option value="greatsword">Greatsword</option>
+                <option value="greatclub">Greatclub</option>
+                <option value="handaxe">Handaxe</option>
+            </select>
+            <div id="weapon-category" class="weapon-category"></div>
+        </div>
+
+        <!-- Table Section -->
+        <table id="weapon-table" class="hidden">
+            <thead>
+                <tr>
+                    <th colspan="2" id="weapon-name"></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>Martial</strong></td>
+                    <td id="martial-value"></td>
+                </tr>
+                <tr>
+                    <td><strong>Master</strong></td>
+                    <td id="master-value"></td>
+                </tr>
+                <tr>
+                    <td><strong>Master Perk</strong></td>
+                    <td id="master-perk-value"></td>
+                </tr>
+            </tbody>
+        </table>
+
+        <!-- Image Download Section -->
+        <div class="image-container">
+            <img src="images/WeaponMastery.png" alt="Example Image" width="600">
+            <br>
+            <a href="images/WeaponMastery.png" download>
+                <button>Download Image</button>
+            </a>
+        </div>
+<div style="text-align:left">
+    
+    <p><strong>Keywords:</strong></p>
+    <ul style="list-style-type: none;">
+        <li style="color:#ffcc00;"><strong>Weapon DC:</strong> 8 + Proficiency + Strength (or Dexterity if the weapon has the finesse property)</li>
+        <li><strong>Brace: </strong> As an Action you choose to Brace. On your turn, choose any targets you can see that are at least 20 feet away from you. If any one of those targets move within your weapon’s reach before your next turn, you can make one melee attack against it with your weapon, which uses your reaction. If the attack hits, treat the attack as a critical hit. While bracing, you cannot use a reaction. While bracing, if you move or are moved against your will, you forfeit the reaction until your next turn. A brace attack is not an Opportunity Attack.</li>
+        <li><strong>Deflect: </strong> If struck by a melee weapon attack, you can use your reaction to roll your weapon’s damage plus your strength modifier, then subtract that total from the damage dealt to you for one attack. If you are dual wielding deflect weapons and you deflect one attack, you may deflect another attack as a free action on the same turn.</li>
+        <li><strong>Disarm: </strong>On hit, you can choose to deal only your Strength modifier in damage and force your enemy to roll a Strength or Dexterity Saving Throw. On a failure, it drops one held object of your choice, landing within 5ft of it. If the enemy is larger than you or is using a two-handed weapon, it gains advantage on this save. If it is smaller than you, it suffers disadvantage. Shields that are strapped to the arm are immune to Disarm.</li>
+        <li><strong>Trip: </strong>If your attack is successful, you can choose to deal only your Strength modifier in damage and your enemy must succeed on a Strength or Dexterity Saving Throw or be knocked prone. Enemies 1 size category larger than you gain advantage on this save. Enemies two size categories larger than you are immune to being tripped in this way.</li>
+       <li><strong>Conceal: </strong>You gain advantage on Sleight of Hand Checks made to conceal the weapon on your person. If it is discovered, some conceal weapons still require the searching party to make a successful Intelligence check to identify what it is.</li>
+        <li><strong>Lunge: </strong>If you use the attack action, you can use your reaction to lunge and increase your range by 5ft for all other attacks the rest of the turn. This ends with your turn and cannot be used as part of an Opportunity Attack.</li>
+        <li><strong>Entangle: </strong>On hit, you can choose to deal only your Strength modifier in damage and force the enemy to succeed on a Strength or Dexterity Saving Throw or be grappled. To escape, the entangled target must succeed a grapple check against your weapon DC, gaining advantage if it is larger than you. Creatures two size categories larger than you are immune to being entangled.</li>
+        <li><strong>Penetrate: </strong>While attacking an enemy using a shield or wearing heavy armor, you can roll total damage from your weapon twice and take the better result.</li>
+        <li><strong>Doubled Ended: </strong>You make an additional attack as a bonus action using the damage listed, if you are within 5 ft of your target and wielding your weapon with two hands. Double Ended attacks do not benefit from Reach.</li>
+        <li><strong></strong></li>
+    </ul>
+ <p style="text-align: center;">Weapon Mastery based on a video by <a href="https://www.youtube.com/@thebountifulmimic">The Bountiful Mimic</a></p>
+
+</div>
+
+
+    <script>
+    class Weapon {
+        constructor(name, martial, master, masterPerk, category) {
+            this.name = name;
+            this.martial = martial;
+            this.master = master;
+            this.masterPerk = masterPerk;
+            this.category = category;
+        }
+    }
+
+      const weapons = {
+        longsword: new Weapon(
+            "Longsword",
+            "Melee d8, Disarm, Versatile d10",
+            "Melee d10, Disarm, Finesse, Versatile d12",
+            "Your Critical hit range is 18-20",
+            "Combat Blades"
+        ),
+        battleaxe: new Weapon(
+            "Battle Axe",
+            "Melee d8, Trip, Versatile d10",
+            "Melee d10, Trip, Versatile d12",
+            "Can reroll damage if the dice is 1 or 2. Must take the new roll",
+            "Axes"
+        ),
+        longbow: new Weapon(
+            "Longbow",
+            "Two Handed, Ranged d8 (150/600), Heavy",
+            "Two Handed, Ranged d10 (150/600), Heavy",
+            "If you suffer disadvantage for any reason, you can use your reaction to attempt a concentration check against DC10 or half your target's AC, whichever is higher. If you succeed, your disadvantage is negated.",
+            "Bows and Slings"
+        ),
+        dagger: new Weapon(
+            "Dagger",
+            "Melee d4, Conceal, Finesse, Light, Thrown (20/60)",
+            "Melee d4, Conceal, Finesse, Light, Thrown (20/60)",
+            "You can use a bonus action to make an attack with a dagger, even if you don't take the attack action",
+            "Dueling Blades"
+        ),
+        glaive: new Weapon(
+            "Glaive",
+            "Two Handed, Melee d10, Brace, Finesse, Reach, Heavy",
+            "Two Handed, Melee 2d6, Brace, Finesse, Reach, Lunge, Heavy",
+            "Against creatures of category size Large and larger, your damage is 3d6 instead of 2d6.",
+            "Polearms"
+        ),
+        halberd: new Weapon(
+            "Halberd",
+            "Two Handed, Melee d10, Brace, Heavy, Reach, Trip",
+            "Two Handed, Melee 2d6, Brace, Entangle, Heavy, Reach, Trip",
+            "Advantage on trip attacks made to mounted enemies and Large creatures. If you succeed on a trip against a mounted foe, it is automatically pulled from its mount to a prone position. You may entangle foes up to two sizes larger than you, and you have advantage on this attack.",
+            "Axes"
+        ),
+        warpick: new Weapon(
+            "War Pick",
+            "Melee d8, Penetrate, Trip",
+            "Melee d10, Penetrate, Trip",
+            "You can choose to take -5 to your attack roll in exchange for a piercing blow. On a hit, your target takes piercing damage equal to your strength modifier at the start of each of their turns. A creature can attempt a Constitution saving throw at the end of their turn, ending the effect on a success. If the creature receives any healing, this also ends the effect.",
+            "Hammers and Picks"
+        ),
+        morningstar: new Weapon(
+            "Morningstar",
+            "Two Handed, Melee d10, Brace, Reach",
+            "Two Handed, Melee d12, Brace, Double Ended d4, Reach",
+            "Before you roll an attack, you can choose to -5 to the roll. If you hit, you reduce the enemy armor's AC by an amount equal to your Strength modifier and deal this same amount in piercing damage.",
+            "Bludgeons"
+        ),
+        spear: new Weapon(
+            "Spear",
+            "Melee d6, Thrown (20/60), Double Ended d4, Finesse, Versatile d8",
+            "Melee d8, Thrown (30/120), Double Ended d4, Finesse, Versatile d10",
+            "If you hit the same target twice in a row, your second hit deals an extra d6 damage. As long as you continue to hit the same target, even between turns, you deal the extra damage. If you ever miss or change targets you must start this process over.",
+            "Spears"
+        ),
+        trident: new Weapon(
+            "Trident",
+            "Melee d6, Thrown (20/60), Double Ended d4, Finesse, Versatile d8",
+            "Melee d8, Thrown (30/120), Double Ended d4, Finesse, Versatile d10",
+            "Thrown attacks are done at advantage.",
+            "Spears"
+        ),          
+        mace: new Weapon(
+            "Mace",
+            "Melee d6",
+            "Melee d8",
+            "Against enemies wearing heavy or medium armor, you may roll damage twice and take the most favorable result, and also add your strength modifier to damage twice.",
+            "Bludgeons"
+        ),
+        quarterstaff: new Weapon(
+            "Quarterstaff",
+            "Melee d6, Versatile d8",
+            "Melee d8, Versatile d10, Double Ended d8",
+            "You gain +1 AC while wielding this weapon and you may use the Double Ended property when you make an Opportunity Attack.",
+            "Bludgeons"
+        ),
+            greatsword: new Weapon(
+            "Greatsword",
+            "Two Handed, Melee 2d6, Heavy",
+            "Two Handed, Melee 2d8, Heavy",
+            "You deal 2d10 damage to Large and larger enemies.",
+            "Combat Blades"
+        ),
+            greatclub: new Weapon(
+            "Greatclub",
+            "Two Handed, Melee d8, Disarm, Heavy",
+            "Two Handed, Melee d10, Deflect, Disarm, Heavy",
+            "If you are successful in a disarm attempt, the enemy can no longer add proficiency to attack rolls and damage with that weapon for the rest of the combat.",
+            "Bludgeons"
+        ),
+            handaxe: new Weapon(
+            "Handaxe",
+            "Melee d6, Thrown (20/60), Light, Trip",
+            "Melee d6, Thrown (20/60), Disarm, Light, Trip",
+            "You gain advantage on attacks you are attempting to disarm.",
+            "Axes"
+        )
+    };
+
+    const dropdown = document.getElementById('weapons');
+    const weaponName = document.getElementById('weapon-name');
+    const weaponCategory = document.getElementById('weapon-category');
+    const table = document.getElementById('weapon-table');
+    const martialValue = document.getElementById('martial-value');
+    const masterValue = document.getElementById('master-value');
+    const masterPerkValue = document.getElementById('master-perk-value');
+
+    dropdown.addEventListener('change', () => {
+        const selectedWeapon = dropdown.value;
+
+        if (selectedWeapon) {
+            const weapon = weapons[selectedWeapon];
+
+            // Set weapon name
+            weaponName.textContent = weapon.name;
+            weaponName.classList.remove('hidden');
+
+            // Set weapon category
+            weaponCategory.textContent = `Category: ${weapon.category}`;
+
+            // Set table values
+            martialValue.textContent = weapon.martial;
+            masterValue.textContent = weapon.master;
+            masterPerkValue.textContent = weapon.masterPerk;
+
+            table.classList.remove('hidden');
+        } else {
+            weaponName.classList.add('hidden');
+            weaponCategory.textContent = "";
+            table.classList.add('hidden');
+        }
+    });
+</script>
+</body>
+</html>
