@@ -19,9 +19,9 @@
     header {
       text-align: center;
       padding-top: 2rem;
-	  padding-bottom: .25rem;
-	  padding-right: 1rem;
-	  padding-left: 1rem;
+      padding-bottom: .25rem;
+      padding-right: 1rem;
+      padding-left: 1rem;
     }
 
     header img.logo {
@@ -33,7 +33,7 @@
       font-weight: 700;
       color: #492468;
       font-size: 3rem;
-	  text-shadow: 1px 0 10px white;
+      text-shadow: 1px 0 10px white;
     }
 
     header p {
@@ -47,9 +47,8 @@
       flex-direction: column;
       align-items: center;
       margin-bottom: 2rem;
-	  margin-top: 0.25;
-	  margin-left: auto;
-	  margin-right: auto;
+      margin-left: auto;
+      margin-right: auto;
       max-width: 1200px;
       background: rgba(100,100,100,0.4);
       border-radius: 15px;
@@ -90,8 +89,34 @@
       padding: 10px 20px;
       font-size: 2rem;
       cursor: pointer;
-	  text-decoration: none;
-	  margin: 10px;
+      text-decoration: none;
+      margin: 10px;
+    }
+
+    footer {
+      text-align: center;
+      background: rgba(100,100,100,0.4);
+      border-radius: 15px 15px 0 0;
+      padding: 1rem;
+      margin-top: 2rem;
+      box-shadow: 0 -4px 10px rgba(0,0,0,0.1);
+    }
+
+    .social-links {
+      display: flex;
+      justify-content: center;
+      gap: 1.5rem;
+      margin-top: 0.5rem;
+    }
+
+    .social-links a img {
+      width: 40px;
+      height: 40px;
+      transition: transform 0.2s ease;
+    }
+
+    .social-links a img:hover {
+      transform: scale(1.1);
     }
 
     @media (max-width: 600px) {
@@ -102,7 +127,8 @@
   </style>
 </head>
 <body>
-    <img class="fixed-image" src="images/LogoFinalGems.png" alt="TBM Logo">
+  <img class="fixed-image" src="images/LogoFinalGems.png" alt="TBM Logo">
+
   <header>
     <h1>Welcome to The Bountiful Mimic</h1>
     <p>Explore our tools and resources for managing your tabletop adventures.</p>
@@ -128,7 +154,7 @@
     </div>
   </div>
   
-    <!-- GNS Quiz Module -->
+  <!-- GNS Quiz Module -->
   <div class="module-wrapper">
     <img src="images/gns-banner.png" alt="GNS Banner">
     <div class="module-content">
@@ -138,27 +164,24 @@
     </div>
   </div>
 
-  <!-- Patreon Module -->
-  <div class="module-wrapper">
-    <img src="images/patreon-banner.png" alt="Patreon Banner">
-    <div class="module-content">
-      <h2>Patreon Page</h2>
-      <p>Support us on Patreon.</p>
-      <button><a class="nav-link" href="https://www.patreon.com/thebountifulmimic">Go to Patreon</a></button>
+  <!-- Footer with Social Links -->
+  <footer>
+    <p>Follow and support The Bountiful Mimic</p>
+    <div class="social-links">
+      <a href="https://www.youtube.com/@thebountifulmimic" target="_blank">
+        <img src="images/youtube-icon.png" alt="YouTube">
+      </a>
+      <a href="https://www.patreon.com/thebountifulmimic" target="_blank">
+        <img src="images/patreon-icon.png" alt="Patreon">
+      </a>
+      <a href="https://twitter.com/thebountifulmimic" target="_blank">
+        <img src="images/twitter-icon.png" alt="Twitter">
+      </a>
+      <a href="https://www.instagram.com/thebountifulmimic" target="_blank">
+        <img src="images/instagram-icon.png" alt="Instagram">
+      </a>
     </div>
-  </div>
-
-
-  <!-- Video Module -->
-  <div class="module-wrapper">
-    <img src="images/video-banner.png" alt="Video Banner">
-    <div class="module-content">
-      <h2>YouTube Channel</h2>
-      <p>Check out the YouTube channel.</p>
-      <button><a class="nav-link" href="https://www.youtube.com/@thebountifulmimic">Go to YouTube</a></button>
-    </div>
-  </div>
-
+  </footer>
 
 </body>
 </html>
