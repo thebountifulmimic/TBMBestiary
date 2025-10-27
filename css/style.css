@@ -51,6 +51,13 @@
   font-style: italic;
 }
 
+@font-face {
+  font-family: 'IntroRust';
+  src: url('../fonts/IntroRust-Base.otf') format('otf');
+  font-weight: 700;
+  font-style: normal;
+}
+
 /* =========================
    GLOBAL STYLES
    ========================= */
@@ -164,7 +171,7 @@ button:link {
    HEADINGS
    ========================= */
 h1 {
-  font-family: 'AlmendraSC', Georgia, serif;
+  font-family: 'IntroRust', Georgia, serif;
   font-weight: 700;
   color: #492468;
   margin: 0;
