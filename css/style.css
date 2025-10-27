@@ -124,6 +124,7 @@ button:link {
 .nav-link:link,
 .nav-link:visited {
   color: #fff;
+  text-decoration: none;
 }
 
 
