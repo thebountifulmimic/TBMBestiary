@@ -5,7 +5,6 @@
   <title>Initiative Tracker</title>
   <link rel="stylesheet" href="css/style.css">
   <style>
-    /* Full screen layout for initiative tracker */
     body, html {
       height: 100%;
       margin: 0;
@@ -21,18 +20,18 @@
 
     #left-panel {
       flex: 0 0 50%;
+      position: relative;
     }
 
     #middle-panel {
-	  flex: 0 0 35%;
+      flex: 0 0 35%;
       border-right: 2px solid #FFBF00;
     }
 
     #right-panel {
-    width: 15%;
+      width: 15%;
     }
 
-    /* Checkboxes inline */
     .filter-group {
       display: flex;
       flex-wrap: wrap;
@@ -51,23 +50,24 @@
       margin-right: 0.3rem;
     }
 
-    /* Monster list */
     #monster-list {
       margin-top: 1rem;
     }
+
     .monster-link {
       cursor: pointer;
       margin: 0.2rem 0.5rem 0.2rem 0;
     }
+
     .monster-link:hover {
       color: #FFBF00;
     }
 
-    /* Tracker table */
     table {
       width: 100%;
       border-collapse: collapse;
     }
+
     th, td {
       border: 1px solid #888;
       padding: 0.3rem;
@@ -82,13 +82,71 @@
       border-radius: 4px;
       padding: 0.2rem 0.5rem;
     }
+
+    /* === Info Hover === */
+    .info-container {
+      display: inline-block;
+      position: relative;
+      margin-left: 0.5rem;
+      cursor: help;
+    }
+
+    .info-icon {
+      background-color: #492468;
+      color: white;
+      border-radius: 50%;
+      width: 18px;
+      height: 18px;
+      text-align: center;
+      font-size: 0.8rem;
+      line-height: 18px;
+      display: inline-block;
+      font-weight: bold;
+    }
+
+    .info-tooltip {
+      visibility: hidden;
+      opacity: 0;
+      width: 240px;
+      background-color: #fefefe;
+      color: #000;
+      text-align: left;
+      border-radius: 6px;
+      padding: 0.5rem;
+      position: absolute;
+      top: 25px;
+      left: 0;
+      z-index: 10;
+      box-shadow: 0px 2px 6px rgba(0,0,0,0.3);
+      transition: opacity 0.2s ease;
+    }
+
+    .info-container:hover .info-tooltip {
+      visibility: visible;
+      opacity: 1;
+    }
+
   </style>
 </head>
 <body>
 
 <!-- Left Panel -->
 <div id="left-panel" class="panel">
-  <a id="go-back-btn" href="/bestiary" class="panel-button">⬅ Go Back</a>
+  <div style="display: flex; align-items: center; gap: 0.5rem;">
+    <a id="go-back-btn" href="/bestiary" class="panel-button">⬅ Go Back</a>
+
+    <!-- Info Hover Icon -->
+    <div class="info-container">
+      <span class="info-icon">i</span>
+      <div class="info-tooltip">
+        <!-- 🛈 Add your information text here -->
+        <strong>Initiative Tracker Info:</strong><br>
+        This panel lets you filter and select creatures by type, CR, and source.<br><br>
+        <!-- Replace or expand this section as needed -->
+      </div>
+    </div>
+  </div>
+
   <input id="search" type="text" placeholder="Search by name">
   <h4>Type</h4>
   <div id="type-filters" class="filter-group"></div>
@@ -120,9 +178,9 @@
     <button id="roll-initiative-btn" style="margin-left: 1rem;">Roll Initiative</button>
     <button id="sort-initiative-btn" style="margin-left: 0.5rem;">Sort by Initiative</button>
     <button id="add-blank-btn" style="margin-left: 0.5rem;">Add Blank Entry</button>
-	<button id="save-tracker-btn" style="margin-left: 0.5rem;">Save Tracker</button>
-	<button id="load-tracker-btn" style="margin-left: 0.5rem;">Load Tracker</button>
-	<input type="file" id="load-tracker-input" accept=".json" style="display:none;">
+    <button id="save-tracker-btn" style="margin-left: 0.5rem;">Save Tracker</button>
+    <button id="load-tracker-btn" style="margin-left: 0.5rem;">Load Tracker</button>
+    <input type="file" id="load-tracker-input" accept=".json" style="display:none;">
   </h2>
   <table id="initiative-table">
     <thead>
@@ -144,15 +202,14 @@
 
 <!-- Right Panel -->
 <div id="right-panel" class="panel">
-		<div class="nav-buttons">
-	  <a class="nav-link" href="/">
-		<img src="images/homeicon.png" alt="Home">
-	  </a>
-	</div>
+  <div class="nav-buttons">
+    <a class="nav-link" href="/">
+      <img src="images/homeicon.png" alt="Home">
+    </a>
+  </div>
   <div id="stat-block"></div>
 </div>
 
-
-  <script src="js/initiative.js"></script>
+<script src="js/initiative.js"></script>
 </body>
 </html>
