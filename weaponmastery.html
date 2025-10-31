@@ -27,12 +27,6 @@
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
         }
 
-        h1 {
-            color: #ffcc00;
-            margin-bottom: 20px;
-            font-family: 'Intro Rust', Arial, sans-serif;
-        }
-
         .image-container {
             margin-top: 20px;
         }
@@ -158,6 +152,13 @@
 
 
 <script>
+/*
+  Single unified script:
+  - Uses the existing <select id="weapons"> and the stat table
+  - Groups options by category with <optgroup>
+  - Keeps weapons keyed by filename (without .json) so selection maps to files
+*/
+
 class Weapon {
   constructor(name, martial, master, masterPerk, category) {
     this.name = name;
@@ -168,7 +169,7 @@ class Weapon {
   }
 }
 
-const dropdown = document.getElementById('weapons');
+const selectEl = document.getElementById('weapons');
 const weaponName = document.getElementById('weapon-name');
 const weaponCategory = document.getElementById('weapon-category');
 const table = document.getElementById('weapon-table');
@@ -176,120 +177,108 @@ const martialValue = document.getElementById('martial-value');
 const masterValue = document.getElementById('master-value');
 const masterPerkValue = document.getElementById('master-perk-value');
 
-let weapons = {};
+let weapons = {}; // { id: Weapon }
+let manifestFiles = []; // keep manifest for file lookup if needed
 
-async function loadManifest() {
+async function initWeaponsDropdown() {
   try {
-    const response = await fetch('weapons/manifest.json');
-    if (!response.ok) throw new Error('Manifest not found');
-    const files = await response.json(); // array of filenames like ["longsword.json", "dagger.json"]
-    await loadWeapons(files);
+    // 1) load manifest
+    const manifestResp = await fetch('weapons/manifest.json');
+    if (!manifestResp.ok) throw new Error('Could not load weapons/manifest.json');
+    manifestFiles = await manifestResp.json(); // ["longsword.json", ...]
+    if (!Array.isArray(manifestFiles)) throw new Error('manifest.json is not an array');
+
+    // 2) fetch all weapon files in parallel
+    const fetches = manifestFiles.map(file =>
+      fetch(`weapons/${file}`)
+        .then(r => {
+          if (!r.ok) throw new Error(`Failed to load weapons/${file}`);
+          return r.json();
+        })
+        .then(data => {
+          const id = file.replace(/\.json$/i, '');
+          weapons[id] = new Weapon(
+            data.name || id,
+            data.martial || '',
+            data.master || '',
+            data.masterPerk || '',
+            data.category || 'Uncategorized'
+          );
+          // keep original filename if needed: weapons[id].__file = file;
+        })
+    );
+
+    await Promise.all(fetches);
+
+    // 3) group by category and populate the existing select (#weapons)
+    populateSelectGroupedByCategory();
+
   } catch (err) {
-    console.error('Error loading manifest:', err);
+    console.error('Error initializing weapons dropdown:', err);
+    // fallback: leave the default static option so UI still works
   }
 }
 
-async function loadWeapons(files) {
-  const promises = files.map(file =>
-    fetch(`weapons/${file}`)
-      .then(r => {
-        if (!r.ok) throw new Error(`Failed to load ${file}`);
-        return r.json();
-      })
-      .then(data => {
-        const id = file.replace('.json', '');
-        weapons[id] = new Weapon(
-          data.name,
-          data.martial,
-          data.master,
-          data.masterPerk,
-          data.category
-        );
-      })
-  );
+function populateSelectGroupedByCategory() {
+  // Clear existing options but keep the first placeholder option
+  selectEl.innerHTML = ''; 
+  const placeholder = document.createElement('option');
+  placeholder.value = '';
+  placeholder.textContent = '--Select a Weapon--';
+  selectEl.appendChild(placeholder);
 
-  await Promise.all(promises);
-  populateDropdown();
-}
+  // Build category -> [ {id, name} ] map
+  const categoryMap = {};
+  Object.keys(weapons).forEach(id => {
+    const w = weapons[id];
+    const cat = w.category || 'Uncategorized';
+    if (!categoryMap[cat]) categoryMap[cat] = [];
+    categoryMap[cat].push({ id, name: w.name });
+  });
 
-function populateDropdown() {
-  Object.keys(weapons).forEach(key => {
-    const option = document.createElement('option');
-    option.value = key;
-    option.textContent = weapons[key].name;
-    dropdown.appendChild(option);
+  // Sort categories and weapon names
+  Object.keys(categoryMap).sort((a,b) => a.localeCompare(b)).forEach(cat => {
+    const optgroup = document.createElement('optgroup');
+    optgroup.label = cat;
+
+    categoryMap[cat]
+      .sort((x, y) => x.name.localeCompare(y.name))
+      .forEach(item => {
+        const option = document.createElement('option');
+        option.value = item.id;       // keep id (filename without .json)
+        option.textContent = item.name;
+        optgroup.appendChild(option);
+      });
+
+    selectEl.appendChild(optgroup);
   });
 }
 
-dropdown.addEventListener('change', () => {
-  const selectedWeapon = dropdown.value;
-
-  if (selectedWeapon && weapons[selectedWeapon]) {
-    const weapon = weapons[selectedWeapon];
-
-    weaponName.textContent = weapon.name;
-    weaponCategory.textContent = `Category: ${weapon.category}`;
-    martialValue.textContent = weapon.martial;
-    masterValue.textContent = weapon.master;
-    masterPerkValue.textContent = weapon.masterPerk;
-
+// When selection changes, show stats using the weapons map
+selectEl.addEventListener('change', () => {
+  const selectedId = selectEl.value;
+  if (selectedId && weapons[selectedId]) {
+    const w = weapons[selectedId];
+    weaponName.textContent = w.name;
+    weaponCategory.textContent = `Category: ${w.category}`;
+    martialValue.textContent = w.martial;
+    masterValue.textContent = w.master;
+    masterPerkValue.textContent = w.masterPerk;
     table.classList.remove('hidden');
   } else {
-    weaponName.textContent = "";
-    weaponCategory.textContent = "";
+    weaponName.textContent = '';
+    weaponCategory.textContent = '';
+    martialValue.textContent = '';
+    masterValue.textContent = '';
+    masterPerkValue.textContent = '';
     table.classList.add('hidden');
   }
 });
 
-loadManifest();
+// init
+initWeaponsDropdown();
 </script>
-<select id="weaponDropdown">
-  <option value="">Select a weapon...</option>
-</select>
 
-<script>
-async function loadWeapons() {
-  try {
-    // Fetch the manifest generated automatically by the GitHub Action
-    const manifestResponse = await fetch('weapons/manifest.json');
-    const manifest = await manifestResponse.json();
-
-    // Group weapons by category
-    const categoryMap = {};
-
-    for (const filename of manifest) {
-      const response = await fetch(`weapons/${filename}`);
-      const weapon = await response.json();
-      if (!categoryMap[weapon.category]) categoryMap[weapon.category] = [];
-      categoryMap[weapon.category].push(weapon);
-    }
-
-    const dropdown = document.getElementById('weaponDropdown');
-    dropdown.innerHTML = '<option value="">Select a weapon...</option>';
-
-    // Sort categories and weapons alphabetically
-    Object.keys(categoryMap).sort().forEach(category => {
-      const optgroup = document.createElement('optgroup');
-      optgroup.label = category;
-
-      categoryMap[category]
-        .sort((a, b) => a.name.localeCompare(b.name))
-        .forEach(weapon => {
-          const option = document.createElement('option');
-          option.value = weapon.name;
-          option.textContent = weapon.name;
-          optgroup.appendChild(option);
-        });
-
-      dropdown.appendChild(optgroup);
-    });
-  } catch (err) {
-    console.error('Error loading weapons:', err);
-  }
-}
-
-loadWeapons();
-</script>
 
 
 </body>
