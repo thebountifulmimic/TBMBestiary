@@ -1,0 +1,7 @@
+{
+  "name": "Greatsword",
+  "martial": "Two Handed, Melee 2d6, Heavy",
+  "master": "Two Handed, Melee 2d8, Heavy",
+  "masterPerk": "You deal 2d10 damage to Large and larger enemies.",
+  "category": "Combat Blades"
+}

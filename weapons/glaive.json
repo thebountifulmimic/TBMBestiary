@@ -1,0 +1,7 @@
+{
+  "name": "Glaive",
+  "martial": "Two Handed, Melee d10, Brace, Finesse, Reach, Heavy",
+  "master": "Two Handed, Melee 2d6, Brace, Finesse, Reach, Lunge, Heavy",
+  "masterPerk": "Against creatures of category size Large and larger, your damage is 3d6 instead of 2d6.",
+  "category": "Polearms"
+}

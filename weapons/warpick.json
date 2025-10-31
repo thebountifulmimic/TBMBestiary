@@ -1,0 +1,7 @@
+{
+  "name": "War Pick",
+  "martial": "Melee d8, Penetrate, Trip",
+  "master": "Melee d10, Penetrate, Trip",
+  "masterPerk": "You can choose to take -5 to your attack roll in exchange for a piercing blow. On a hit, your target takes piercing damage equal to your strength modifier at the start of each of their turns. A creature can attempt a Constitution saving throw at the end of their turn, ending the effect on a success. If the creature receives any healing, this also ends the effect.",
+  "category": "Hammers and Picks"
+}

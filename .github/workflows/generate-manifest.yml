@@ -1,0 +1,36 @@
+name: Generate Weapons Manifest
+
+on:
+  push:
+    branches:
+      - main  # or 'master', depending on your default branch
+    paths:
+      - "weapons/*.json"
+      - ".github/workflows/generate-manifest.yml"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Generate manifest.json
+        run: |
+          echo "Generating weapons/manifest.json..."
+          files=$(ls weapons/*.json | xargs -n 1 basename | jq -R -s -c 'split("\n")[:-1]')
+          echo $files > weapons/manifest.json
+          cat weapons/manifest.json
+
+      - name: Commit and push manifest
+        run: |
+          git config user.name "github-actions"
+          git config user.email "github-actions@github.com"
+          git add weapons/manifest.json
+          if git diff --cached --quiet; then
+            echo "No changes to commit"
+          else
+            git commit -m "Auto-update weapons manifest"
+            git push
+          fi

@@ -1,0 +1,7 @@
+{
+  "name": "Battleaxe",
+  "martial": "Melee d8, Trip, Versatile d10",
+  "master": "Melee d10, Trip, Versatile d12",
+  "masterPerk": "Can reroll damage if the dice is 1 or 2. Must take the new roll.",
+  "category": "Axes"
+}

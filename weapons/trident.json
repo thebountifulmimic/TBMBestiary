@@ -1,0 +1,7 @@
+{
+  "name": "Trident",
+  "martial": "Melee d6, Thrown (20/60), Double Ended d4, Finesse, Versatile d8",
+  "master": "Melee d8, Thrown (30/120), Double Ended d4, Finesse, Versatile d10",
+  "masterPerk": "Thrown attacks are done at advantage.",
+  "category": "Spears"
+}

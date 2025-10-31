@@ -1,0 +1,7 @@
+{
+  "name": "Morningstar",
+  "martial": "Two Handed, Melee d10, Brace, Reach",
+  "master": "Two Handed, Melee d12, Brace, Double Ended d4, Reach",
+  "masterPerk": "Before you roll an attack, you can choose to -5 to the roll. If you hit, you reduce the enemy armor's AC by an amount equal to your Strength modifier and deal this same amount in piercing damage.",
+  "category": "Bludgeons"
+}

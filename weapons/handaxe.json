@@ -1,0 +1,7 @@
+{
+  "name": "Handaxe",
+  "martial": "Melee d6, Thrown (20/60), Light, Trip",
+  "master": "Melee d6, Thrown (20/60), Disarm, Light, Trip",
+  "masterPerk": "You gain advantage on attacks if you are attempting to disarm.",
+  "category": "Axes"
+}

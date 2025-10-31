@@ -1,0 +1,7 @@
+{
+  "name": "Greatclub",
+  "martial": "Two Handed, Melee d8, Disarm, Heavy",
+  "master": "Two Handed, Melee d10, Deflect, Disarm, Heavy",
+  "masterPerk": "If you are successful in a disarm attempt, the enemy can no longer add proficiency to attack rolls and damage with that weapon for the rest of the combat.",
+  "category": "Bludgeons"
+}

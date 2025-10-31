@@ -1,0 +1,7 @@
+{
+  "name": "Longsword",
+  "martial": "Melee d8, Disarm, Versatile d10",
+  "master": "Melee d10, Disarm, Finesse, Versatile d12",
+  "masterPerk": "Your Critical hit range is 18–20",
+  "category": "Combat Blades"
+}

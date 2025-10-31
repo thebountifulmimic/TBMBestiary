@@ -1,0 +1,7 @@
+{
+  "name": "Mace",
+  "martial": "Melee d6",
+  "master": "Melee d8",
+  "masterPerk": "Against enemies wearing heavy or medium armor, you may roll damage twice and take the most favorable result, and also add your strength modifier to damage twice.",
+  "category": "Bludgeons"
+}

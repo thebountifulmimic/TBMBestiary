@@ -1,0 +1,7 @@
+{
+  "name": "Dagger",
+  "martial": "Melee d4, Conceal, Finesse, Light, Thrown (20/60)",
+  "master": "Melee d4, Conceal, Finesse, Light, Thrown (20/60)",
+  "masterPerk": "You can use a bonus action to make an attack with a dagger, even if you don't take the attack action",
+  "category": "Dueling Blades"
+}

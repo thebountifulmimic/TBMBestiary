@@ -91,28 +91,14 @@
         <h1>Weapon Mastery System</h1>
 
         <!-- Dropdown Menu Section -->
-        <div class="dropdown-container">
-            <label for="weapons">Choose a weapon:</label>
-            <select id="weapons">
-                <option value="">--Select a Weapon--</option>
-                <option value="longsword">Longsword</option>
-                <option value="battleaxe">Battleaxe</option>
-                <option value="longbow">Longbow</option>
-                <option value="dagger">Dagger</option>
-                <option value="glaive">Glaive</option>
-                <option value="halberd">Halberd</option>
-                <option value="warpick">Warpick</option>
-                <option value="morningstar">Morningstar</option>
-                <option value="spear">Spear</option>
-                <option value="trident">Trident</option>
-                <option value="mace">Mace</option>
-                <option value="quarterstaff">Quarterstaff</option>
-                <option value="greatsword">Greatsword</option>
-                <option value="greatclub">Greatclub</option>
-                <option value="handaxe">Handaxe</option>
-            </select>
-            <div id="weapon-category" class="weapon-category"></div>
-        </div>
+<div class="dropdown-container">
+  <label for="weapons">Choose a weapon:</label>
+  <select id="weapons">
+    <option value="">--Select a Weapon--</option>
+  </select>
+  <div id="weapon-category" class="weapon-category"></div>
+</div>
+
 
         <!-- Table Section -->
         <table id="weapon-table" class="hidden">
@@ -166,158 +152,93 @@
 </div>
 
 
-    <script>
-    class Weapon {
-        constructor(name, martial, master, masterPerk, category) {
-            this.name = name;
-            this.martial = martial;
-            this.master = master;
-            this.masterPerk = masterPerk;
-            this.category = category;
-        }
-    }
+<script>
+class Weapon {
+  constructor(name, martial, master, masterPerk, category) {
+    this.name = name;
+    this.martial = martial;
+    this.master = master;
+    this.masterPerk = masterPerk;
+    this.category = category;
+  }
+}
 
-      const weapons = {
-        longsword: new Weapon(
-            "Longsword",
-            "Melee d8, Disarm, Versatile d10",
-            "Melee d10, Disarm, Finesse, Versatile d12",
-            "Your Critical hit range is 18-20",
-            "Combat Blades"
-        ),
-        battleaxe: new Weapon(
-            "Battle Axe",
-            "Melee d8, Trip, Versatile d10",
-            "Melee d10, Trip, Versatile d12",
-            "Can reroll damage if the dice is 1 or 2. Must take the new roll",
-            "Axes"
-        ),
-        longbow: new Weapon(
-            "Longbow",
-            "Two Handed, Ranged d8 (150/600), Heavy",
-            "Two Handed, Ranged d10 (150/600), Heavy",
-            "If you suffer disadvantage for any reason, you can use your reaction to attempt a concentration check against DC10 or half your target's AC, whichever is higher. If you succeed, your disadvantage is negated.",
-            "Bows and Slings"
-        ),
-        dagger: new Weapon(
-            "Dagger",
-            "Melee d4, Conceal, Finesse, Light, Thrown (20/60)",
-            "Melee d4, Conceal, Finesse, Light, Thrown (20/60)",
-            "You can use a bonus action to make an attack with a dagger, even if you don't take the attack action",
-            "Dueling Blades"
-        ),
-        glaive: new Weapon(
-            "Glaive",
-            "Two Handed, Melee d10, Brace, Finesse, Reach, Heavy",
-            "Two Handed, Melee 2d6, Brace, Finesse, Reach, Lunge, Heavy",
-            "Against creatures of category size Large and larger, your damage is 3d6 instead of 2d6.",
-            "Polearms"
-        ),
-        halberd: new Weapon(
-            "Halberd",
-            "Two Handed, Melee d10, Brace, Heavy, Reach, Trip",
-            "Two Handed, Melee 2d6, Brace, Entangle, Heavy, Reach, Trip",
-            "Advantage on trip attacks made to mounted enemies and Large creatures. If you succeed on a trip against a mounted foe, it is automatically pulled from its mount to a prone position. You may entangle foes up to two sizes larger than you, and you have advantage on this attack.",
-            "Axes"
-        ),
-        warpick: new Weapon(
-            "War Pick",
-            "Melee d8, Penetrate, Trip",
-            "Melee d10, Penetrate, Trip",
-            "You can choose to take -5 to your attack roll in exchange for a piercing blow. On a hit, your target takes piercing damage equal to your strength modifier at the start of each of their turns. A creature can attempt a Constitution saving throw at the end of their turn, ending the effect on a success. If the creature receives any healing, this also ends the effect.",
-            "Hammers and Picks"
-        ),
-        morningstar: new Weapon(
-            "Morningstar",
-            "Two Handed, Melee d10, Brace, Reach",
-            "Two Handed, Melee d12, Brace, Double Ended d4, Reach",
-            "Before you roll an attack, you can choose to -5 to the roll. If you hit, you reduce the enemy armor's AC by an amount equal to your Strength modifier and deal this same amount in piercing damage.",
-            "Bludgeons"
-        ),
-        spear: new Weapon(
-            "Spear",
-            "Melee d6, Thrown (20/60), Double Ended d4, Finesse, Versatile d8",
-            "Melee d8, Thrown (30/120), Double Ended d4, Finesse, Versatile d10",
-            "If you hit the same target twice in a row, your second hit deals an extra d6 damage. As long as you continue to hit the same target, even between turns, you deal the extra damage. If you ever miss or change targets you must start this process over.",
-            "Spears"
-        ),
-        trident: new Weapon(
-            "Trident",
-            "Melee d6, Thrown (20/60), Double Ended d4, Finesse, Versatile d8",
-            "Melee d8, Thrown (30/120), Double Ended d4, Finesse, Versatile d10",
-            "Thrown attacks are done at advantage.",
-            "Spears"
-        ),          
-        mace: new Weapon(
-            "Mace",
-            "Melee d6",
-            "Melee d8",
-            "Against enemies wearing heavy or medium armor, you may roll damage twice and take the most favorable result, and also add your strength modifier to damage twice.",
-            "Bludgeons"
-        ),
-        quarterstaff: new Weapon(
-            "Quarterstaff",
-            "Melee d6, Versatile d8",
-            "Melee d8, Versatile d10, Double Ended d8",
-            "You gain +1 AC while wielding this weapon and you may use the Double Ended property when you make an Opportunity Attack.",
-            "Bludgeons"
-        ),
-            greatsword: new Weapon(
-            "Greatsword",
-            "Two Handed, Melee 2d6, Heavy",
-            "Two Handed, Melee 2d8, Heavy",
-            "You deal 2d10 damage to Large and larger enemies.",
-            "Combat Blades"
-        ),
-            greatclub: new Weapon(
-            "Greatclub",
-            "Two Handed, Melee d8, Disarm, Heavy",
-            "Two Handed, Melee d10, Deflect, Disarm, Heavy",
-            "If you are successful in a disarm attempt, the enemy can no longer add proficiency to attack rolls and damage with that weapon for the rest of the combat.",
-            "Bludgeons"
-        ),
-            handaxe: new Weapon(
-            "Handaxe",
-            "Melee d6, Thrown (20/60), Light, Trip",
-            "Melee d6, Thrown (20/60), Disarm, Light, Trip",
-            "You gain advantage on attacks you are attempting to disarm.",
-            "Axes"
-        )
-    };
+const dropdown = document.getElementById('weapons');
+const weaponName = document.getElementById('weapon-name');
+const weaponCategory = document.getElementById('weapon-category');
+const table = document.getElementById('weapon-table');
+const martialValue = document.getElementById('martial-value');
+const masterValue = document.getElementById('master-value');
+const masterPerkValue = document.getElementById('master-perk-value');
 
-    const dropdown = document.getElementById('weapons');
-    const weaponName = document.getElementById('weapon-name');
-    const weaponCategory = document.getElementById('weapon-category');
-    const table = document.getElementById('weapon-table');
-    const martialValue = document.getElementById('martial-value');
-    const masterValue = document.getElementById('master-value');
-    const masterPerkValue = document.getElementById('master-perk-value');
+let weapons = {};
 
-    dropdown.addEventListener('change', () => {
-        const selectedWeapon = dropdown.value;
+async function loadManifest() {
+  try {
+    const response = await fetch('weapons/manifest.json');
+    if (!response.ok) throw new Error('Manifest not found');
+    const files = await response.json(); // array of filenames like ["longsword.json", "dagger.json"]
+    await loadWeapons(files);
+  } catch (err) {
+    console.error('Error loading manifest:', err);
+  }
+}
 
-        if (selectedWeapon) {
-            const weapon = weapons[selectedWeapon];
+async function loadWeapons(files) {
+  const promises = files.map(file =>
+    fetch(`weapons/${file}`)
+      .then(r => {
+        if (!r.ok) throw new Error(`Failed to load ${file}`);
+        return r.json();
+      })
+      .then(data => {
+        const id = file.replace('.json', '');
+        weapons[id] = new Weapon(
+          data.name,
+          data.martial,
+          data.master,
+          data.masterPerk,
+          data.category
+        );
+      })
+  );
 
-            // Set weapon name
-            weaponName.textContent = weapon.name;
-            weaponName.classList.remove('hidden');
+  await Promise.all(promises);
+  populateDropdown();
+}
 
-            // Set weapon category
-            weaponCategory.textContent = `Category: ${weapon.category}`;
+function populateDropdown() {
+  Object.keys(weapons).forEach(key => {
+    const option = document.createElement('option');
+    option.value = key;
+    option.textContent = weapons[key].name;
+    dropdown.appendChild(option);
+  });
+}
 
-            // Set table values
-            martialValue.textContent = weapon.martial;
-            masterValue.textContent = weapon.master;
-            masterPerkValue.textContent = weapon.masterPerk;
+dropdown.addEventListener('change', () => {
+  const selectedWeapon = dropdown.value;
 
-            table.classList.remove('hidden');
-        } else {
-            weaponName.classList.add('hidden');
-            weaponCategory.textContent = "";
-            table.classList.add('hidden');
-        }
-    });
+  if (selectedWeapon && weapons[selectedWeapon]) {
+    const weapon = weapons[selectedWeapon];
+
+    weaponName.textContent = weapon.name;
+    weaponCategory.textContent = `Category: ${weapon.category}`;
+    martialValue.textContent = weapon.martial;
+    masterValue.textContent = weapon.master;
+    masterPerkValue.textContent = weapon.masterPerk;
+
+    table.classList.remove('hidden');
+  } else {
+    weaponName.textContent = "";
+    weaponCategory.textContent = "";
+    table.classList.add('hidden');
+  }
+});
+
+loadManifest();
 </script>
+
+
 </body>
 </html>

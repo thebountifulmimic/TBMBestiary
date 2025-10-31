@@ -1,0 +1,7 @@
+{
+  "name": "Spear",
+  "martial": "Melee d6, Thrown (20/60), Double Ended d4, Finesse, Versatile d8",
+  "master": "Melee d8, Thrown (30/120), Double Ended d4, Finesse, Versatile d10",
+  "masterPerk": "If you hit the same target twice in a row, your second hit deals an extra d6 damage. As long as you continue to hit the same target, even between turns, you deal the extra damage. If you ever miss or change targets you must start this process over.",
+  "category": "Spears"
+}

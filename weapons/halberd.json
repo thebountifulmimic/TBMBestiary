@@ -1,0 +1,7 @@
+{
+  "name": "Halberd",
+  "martial": "Two Handed, Melee d10, Brace, Heavy, Reach, Trip",
+  "master": "Two Handed, Melee 2d6, Brace, Entangle, Heavy, Reach, Trip",
+  "masterPerk": "Advantage on trip attacks made to mounted enemies and Large creatures. If you succeed on a trip against a mounted foe, it is automatically pulled from its mount to a prone position. You may entangle foes up to two sizes larger than you, and you have advantage on this attack.",
+  "category": "Axes"
+}

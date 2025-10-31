@@ -1,0 +1,7 @@
+{
+  "name": "Longbow",
+  "martial": "Two Handed, Ranged d8 (150/600), Heavy",
+  "master": "Two Handed, Ranged d10 (150/600), Heavy",
+  "masterPerk": "If you suffer disadvantage for any reason, you can use your reaction to attempt a concentration check against DC10 or half your target's AC, whichever is higher. If you succeed, your disadvantage is negated.",
+  "category": "Bows and Slings"
+}
