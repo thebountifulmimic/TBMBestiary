@@ -1,305 +1,297 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Weapon Mastery System</title>
-	<link rel="stylesheet" href="css/style.css">
-    <style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Weapon Mastery System</title>
+  <link rel="stylesheet" href="css/style.css">
+  <style>
 
-        .container {
-            background-color: #2c2c2c;
-            margin: 20px auto;
-            padding: 20px;
-            border-radius: 10px;
-            width: 80%;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
-        }
+    .container {
+      background-color: #2c2c2c;
+      margin: 20px auto;
+      padding: 20px;
+      border-radius: 10px;
+      width: 80%;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+    }
 
-        .image-container {
-            margin-top: 20px;
-        }
+    .image-container {
+      margin-top: 20px;
+    }
 
-        .dropdown-container {
-            margin-bottom: 20px;
-        }
+    .dropdown-container {
+      margin-bottom: 20px;
+    }
 
-        table {
-            margin: 20px auto;
-            border-collapse: collapse;
-            width: 50%;
-            background-color: #3c3c3c;
-            color: white;
-        }
+    table {
+      margin: 20px auto;
+      border-collapse: collapse;
+      width: 50%;
+      background-color: #3c3c3c;
+      color: white;
+    }
 
-        td, th {
-            border: 1px solid #ddd;
-            padding: 8px;
-            text-align: center;
-        }
+    td, th {
+      border: 1px solid #ddd;
+      padding: 8px;
+      text-align: center;
+    }
 
-        th {
-            font-weight: bold;
-            background-color: #2c2c2c;
-        }
+    th {
+      font-weight: bold;
+      background-color: #2c2c2c;
+    }
 
-        .hidden {
-            display: none;
-        }
+    .hidden {
+      display: none;
+    }
 
-        .fixed-image {
-            position: absolute;
-            top: 10px;
-            left: 10px;
-            width: 100px;
-        }
+    .fixed-image {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      width: 100px;
+    }
 
-        a {
-            color: #ffcc00;
-        }
+    a {
+      color: #ffcc00;
+    }
 
-        .weapon-category {
-            font-style: italic;
-            margin-top: 5px;
-            color: #ccc;
-        }
-                ul li {
-            margin-bottom: 10px; /* Adjust this value for desired spacing */
-        }
-		
-		.tooltip {
-		  position: relative;
-		  display: inline-block;
-		  cursor: help;
-		  color: #ffcc00;
-		  font-weight: bold;
-		}
+    .weapon-category {
+      font-style: italic;
+      margin-top: 5px;
+      color: #ccc;
+    }
 
-		.tooltip .info-tooltip {
-		  visibility: hidden;
-		  opacity: 0;
-		  width: 260px;
-		  background-color: #fefefe;
-		  color: #000;
-		  text-align: left;
-		  border-radius: 6px;
-		  padding: 0.5rem;
-		  position: absolute;
-		  top: 25px;
-		  left: 0;
-		  z-index: 10;
-		  box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.3);
-		  transition: opacity 0.2s ease;
-		}
+    ul li {
+      margin-bottom: 10px;
+    }
 
-		.tooltip:hover .info-tooltip {
-		  visibility: visible;
-		  opacity: 1;
-		}
+    /* Tooltip Styles */
+    .tooltip {
+      position: relative;
+      display: inline-block;
+      cursor: help;
+      color: #ffcc00;
+      font-weight: bold;
+    }
 
-    </style>
+    .tooltip .info-tooltip {
+      visibility: hidden;
+      opacity: 0;
+      width: 260px;
+      background-color: #fefefe;
+      color: #000;
+      text-align: left;
+      border-radius: 6px;
+      padding: 0.5rem;
+      position: absolute;
+      top: 25px;
+      left: 0;
+      z-index: 10;
+      box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.3);
+      transition: opacity 0.2s ease;
+    }
+
+    .tooltip:hover .info-tooltip {
+      visibility: visible;
+      opacity: 1;
+    }
+
+  </style>
 </head>
 <body>
-		<div class="nav-buttons" style="margin-left: 1500px;">
-	  <a class="nav-link" href="/">
-		<img src="images/homeicon.png" alt="Home">
-	  </a>
-	</div>
-    <img src="images/LogoFinalGems.png" alt="Decoration Left" class="fixed-image">
-    <div class="container">
-        <h1>Weapon Mastery System</h1>
+  <div class="nav-buttons" style="margin-left: 1500px;">
+    <a class="nav-link" href="/">
+      <img src="images/homeicon.png" alt="Home">
+    </a>
+  </div>
 
-        <!-- Dropdown Menu Section -->
-<div class="dropdown-container">
-  <label for="weapons">Choose a weapon:</label>
-  <select id="weapons">
-    <option value="">--Select a Weapon--</option>
-  </select>
-  <div id="weapon-category" class="weapon-category"></div>
-</div>
+  <img src="images/LogoFinalGems.png" alt="Decoration Left" class="fixed-image">
 
+  <div class="container">
+    <h1>Weapon Mastery System</h1>
 
-        <!-- Table Section -->
-        <table id="weapon-table" class="hidden">
-            <thead>
-                <tr>
-                    <th colspan="2" id="weapon-name"></th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td><strong>Martial</strong></td>
-                    <td id="martial-value"></td>
-                </tr>
-                <tr>
-                    <td><strong>Master</strong></td>
-                    <td id="master-value"></td>
-                </tr>
-                <tr>
-                    <td><strong>Master Perk</strong></td>
-                    <td id="master-perk-value"></td>
-                </tr>
-            </tbody>
-        </table>
+    <div class="dropdown-container">
+      <label for="weapons">Choose a weapon:</label>
+      <select id="weapons">
+        <option value="">--Select a Weapon--</option>
+      </select>
+      <div id="weapon-category" class="weapon-category"></div>
+    </div>
 
-        <!-- Image Download Section -->
-        <div class="image-container">
-            <img src="images/WeaponMastery.png" alt="Example Image" width="600">
-            <br>
-            <a href="images/WeaponMastery.png" download>
-                <button>Download Image</button>
-            </a>
-        </div>
-<div style="text-align:left">
-    
-    <p><strong>Keywords:</strong></p>
-    <ul style="list-style-type: none;">
+    <table id="weapon-table" class="hidden">
+      <thead>
+        <tr><th colspan="2" id="weapon-name"></th></tr>
+      </thead>
+      <tbody>
+        <tr><td><strong>Martial</strong></td><td id="martial-value"></td></tr>
+        <tr><td><strong>Master</strong></td><td id="master-value"></td></tr>
+        <tr><td><strong>Master Perk</strong></td><td id="master-perk-value"></td></tr>
+      </tbody>
+    </table>
+
+    <div class="image-container">
+      <img src="images/WeaponMastery.png" alt="Example Image" width="600">
+      <br>
+      <a href="images/WeaponMastery.png" download><button>Download Image</button></a>
+    </div>
+
+    <div style="text-align:left">
+      <p><strong>Keywords:</strong></p>
+      <ul style="list-style-type: none;">
         <li style="color:#ffcc00;"><strong>Weapon DC:</strong> 8 + Proficiency + Strength (or Dexterity if the weapon has the finesse property)</li>
-        <li><strong>Brace: </strong> As an Action you choose to Brace. On your turn, choose any targets you can see that are at least 20 feet away from you. If any one of those targets move within your weapon’s reach before your next turn, you can make one melee attack against it with your weapon, which uses your reaction. If the attack hits, treat the attack as a critical hit. While bracing, you cannot use a reaction. While bracing, if you move or are moved against your will, you forfeit the reaction until your next turn. A brace attack is not an Opportunity Attack.</li>
-        <li><strong>Deflect: </strong> If struck by a melee weapon attack, you can use your reaction to roll your weapon’s damage plus your strength modifier, then subtract that total from the damage dealt to you for one attack. If you are dual wielding deflect weapons and you deflect one attack, you may deflect another attack as a free action on the same turn.</li>
-        <li><strong>Disarm: </strong>On hit, you can choose to deal only your Strength modifier in damage and force your enemy to roll a Strength or Dexterity Saving Throw. On a failure, it drops one held object of your choice, landing within 5ft of it. If the enemy is larger than you or is using a two-handed weapon, it gains advantage on this save. If it is smaller than you, it suffers disadvantage. Shields that are strapped to the arm are immune to Disarm.</li>
-        <li><strong>Trip: </strong>If your attack is successful, you can choose to deal only your Strength modifier in damage and your enemy must succeed on a Strength or Dexterity Saving Throw or be knocked prone. Enemies 1 size category larger than you gain advantage on this save. Enemies two size categories larger than you are immune to being tripped in this way.</li>
-       <li><strong>Conceal: </strong>You gain advantage on Sleight of Hand Checks made to conceal the weapon on your person. If it is discovered, some conceal weapons still require the searching party to make a successful Intelligence check to identify what it is.</li>
-        <li><strong>Lunge: </strong>If you use the attack action, you can use your reaction to lunge and increase your range by 5ft for all other attacks the rest of the turn. This ends with your turn and cannot be used as part of an Opportunity Attack.</li>
-        <li><strong>Entangle: </strong>On hit, you can choose to deal only your Strength modifier in damage and force the enemy to succeed on a Strength or Dexterity Saving Throw or be grappled. To escape, the entangled target must succeed a grapple check against your weapon DC, gaining advantage if it is larger than you. Creatures two size categories larger than you are immune to being entangled.</li>
-        <li><strong>Penetrate: </strong>While attacking an enemy using a shield or wearing heavy armor, you can roll total damage from your weapon twice and take the better result.</li>
-        <li><strong>Doubled Ended: </strong>You make an additional attack as a bonus action using the damage listed, if you are within 5 ft of your target and wielding your weapon with two hands. Double Ended attacks do not benefit from Reach.</li>
-        <li><strong></strong></li>
-    </ul>
- <p style="text-align: center;">Weapon Mastery based on a video by <a href="https://www.youtube.com/@thebountifulmimic">The Bountiful Mimic</a></p>
+        <li><strong>Brace: </strong> As an Action you choose to Brace. On your turn, choose any targets you can see that are at least 20 feet away...</li>
+        <li><strong>Deflect: </strong> If struck by a melee weapon attack...</li>
+        <li><strong>Disarm: </strong>On hit, you can choose to deal only your Strength modifier...</li>
+        <li><strong>Trip: </strong>If your attack is successful, you can choose to deal only your Strength modifier...</li>
+        <li><strong>Conceal: </strong>You gain advantage on Sleight of Hand Checks made to conceal the weapon...</li>
+        <li><strong>Lunge: </strong>If you use the attack action, you can use your reaction to lunge...</li>
+        <li><strong>Entangle: </strong>On hit, you can choose to deal only your Strength modifier...</li>
+        <li><strong>Penetrate: </strong>While attacking an enemy using a shield or wearing heavy armor...</li>
+        <li><strong>Double Ended: </strong>You make an additional attack as a bonus action...</li>
+      </ul>
+      <p style="text-align: center;">Weapon Mastery based on a video by <a href="https://www.youtube.com/@thebountifulmimic">The Bountiful Mimic</a></p>
+    </div>
+  </div>
 
-</div>
+  <script>
+    // --------------------------
+    // Tooltip Dictionary
+    // --------------------------
+    const keywordInfo = {
+      "Brace": "As an Action you choose to Brace. On your turn, choose any targets you can see that are at least 20 feet away from you. If any one of those targets move within your weapon’s reach before your next turn, you can make one melee attack against it with your weapon, which uses your reaction. If the attack hits, treat the attack as a critical hit. While bracing, you cannot use a reaction. While bracing, if you move or are moved against your will, you forfeit the reaction until your next turn. A brace attack is not an Opportunity Attack.",
+      "Deflect": "If struck by a melee weapon attack, you can use your reaction to roll your weapon’s damage plus your Strength modifier, then subtract that total from the damage dealt to you for one attack. If you are dual wielding deflect weapons and you deflect one attack, you may deflect another attack as a free action on the same turn.",
+      "Disarm": "On hit, you can choose to deal only your Strength modifier in damage and force your enemy to roll a Strength or Dexterity Saving Throw. On a failure, it drops one held object of your choice.",
+      "Trip": "If your attack is successful, you can choose to deal only your Strength modifier in damage and your enemy must succeed on a Strength or Dexterity Saving Throw or be knocked prone.",
+      "Conceal": "You gain advantage on Sleight of Hand Checks made to conceal the weapon on your person.",
+      "Lunge": "If you use the attack action, you can use your reaction to lunge and increase your range by 5ft for all other attacks the rest of the turn.",
+      "Entangle": "On hit, you can choose to deal only your Strength modifier in damage and force the enemy to succeed on a Strength or Dexterity Saving Throw or be grappled.",
+      "Penetrate": "While attacking an enemy using a shield or wearing heavy armor, you can roll total damage from your weapon twice and take the better result.",
+      "Double Ended": "You make an additional attack as a bonus action using the damage listed if you are wielding your weapon with two hands."
+    };
 
+    function addTooltips(text) {
+      if (!text) return text;
+      let result = text;
+      for (const [keyword, definition] of Object.entries(keywordInfo)) {
+        const regex = new RegExp(`\\b${keyword}\\b`, 'gi');
+        result = result.replace(regex, match => `
+          <span class="tooltip">${match}
+            <div class="info-tooltip">
+              <strong>${keyword}:</strong><br>${definition}
+            </div>
+          </span>
+        `);
+      }
+      return result;
+    }
 
-<script>
-/*
-  Single unified script:
-  - Uses the existing <select id="weapons"> and the stat table
-  - Groups options by category with <optgroup>
-  - Keeps weapons keyed by filename (without .json) so selection maps to files
-*/
+    // --------------------------
+    // Weapon Loader
+    // --------------------------
+    class Weapon {
+      constructor(name, martial, master, masterPerk, category) {
+        this.name = name;
+        this.martial = martial;
+        this.master = master;
+        this.masterPerk = masterPerk;
+        this.category = category;
+      }
+    }
 
-class Weapon {
-  constructor(name, martial, master, masterPerk, category) {
-    this.name = name;
-    this.martial = martial;
-    this.master = master;
-    this.masterPerk = masterPerk;
-    this.category = category;
-  }
-}
+    const selectEl = document.getElementById('weapons');
+    const weaponName = document.getElementById('weapon-name');
+    const weaponCategory = document.getElementById('weapon-category');
+    const table = document.getElementById('weapon-table');
+    const martialValue = document.getElementById('martial-value');
+    const masterValue = document.getElementById('master-value');
+    const masterPerkValue = document.getElementById('master-perk-value');
 
-const selectEl = document.getElementById('weapons');
-const weaponName = document.getElementById('weapon-name');
-const weaponCategory = document.getElementById('weapon-category');
-const table = document.getElementById('weapon-table');
-const martialValue = document.getElementById('martial-value');
-const masterValue = document.getElementById('master-value');
-const masterPerkValue = document.getElementById('master-perk-value');
+    let weapons = {};
+    let manifestFiles = [];
 
-let weapons = {}; // { id: Weapon }
-let manifestFiles = []; // keep manifest for file lookup if needed
+    async function initWeaponsDropdown() {
+      try {
+        const manifestResp = await fetch('weapons/manifest.json');
+        if (!manifestResp.ok) throw new Error('Could not load manifest');
+        manifestFiles = await manifestResp.json();
 
-async function initWeaponsDropdown() {
-  try {
-    // 1) load manifest
-    const manifestResp = await fetch('weapons/manifest.json');
-    if (!manifestResp.ok) throw new Error('Could not load weapons/manifest.json');
-    manifestFiles = await manifestResp.json(); // ["longsword.json", ...]
-    if (!Array.isArray(manifestFiles)) throw new Error('manifest.json is not an array');
+        const fetches = manifestFiles.map(file =>
+          fetch(`weapons/${file}`)
+            .then(r => r.json())
+            .then(data => {
+              const id = file.replace(/\.json$/i, '');
+              weapons[id] = new Weapon(
+                data.name || id,
+                data.martial || '',
+                data.master || '',
+                data.masterPerk || '',
+                data.category || 'Uncategorized'
+              );
+            })
+        );
 
-    // 2) fetch all weapon files in parallel
-    const fetches = manifestFiles.map(file =>
-      fetch(`weapons/${file}`)
-        .then(r => {
-          if (!r.ok) throw new Error(`Failed to load weapons/${file}`);
-          return r.json();
-        })
-        .then(data => {
-          const id = file.replace(/\.json$/i, '');
-          weapons[id] = new Weapon(
-            data.name || id,
-            data.martial || '',
-            data.master || '',
-            data.masterPerk || '',
-            data.category || 'Uncategorized'
-          );
-          // keep original filename if needed: weapons[id].__file = file;
-        })
-    );
+        await Promise.all(fetches);
+        populateSelectGroupedByCategory();
 
-    await Promise.all(fetches);
+      } catch (err) {
+        console.error('Error loading weapons:', err);
+      }
+    }
 
-    // 3) group by category and populate the existing select (#weapons)
-    populateSelectGroupedByCategory();
+    function populateSelectGroupedByCategory() {
+      selectEl.innerHTML = '';
+      const placeholder = document.createElement('option');
+      placeholder.value = '';
+      placeholder.textContent = '--Select a Weapon--';
+      selectEl.appendChild(placeholder);
 
-  } catch (err) {
-    console.error('Error initializing weapons dropdown:', err);
-    // fallback: leave the default static option so UI still works
-  }
-}
-
-function populateSelectGroupedByCategory() {
-  // Clear existing options but keep the first placeholder option
-  selectEl.innerHTML = ''; 
-  const placeholder = document.createElement('option');
-  placeholder.value = '';
-  placeholder.textContent = '--Select a Weapon--';
-  selectEl.appendChild(placeholder);
-
-  // Build category -> [ {id, name} ] map
-  const categoryMap = {};
-  Object.keys(weapons).forEach(id => {
-    const w = weapons[id];
-    const cat = w.category || 'Uncategorized';
-    if (!categoryMap[cat]) categoryMap[cat] = [];
-    categoryMap[cat].push({ id, name: w.name });
-  });
-
-  // Sort categories and weapon names
-  Object.keys(categoryMap).sort((a,b) => a.localeCompare(b)).forEach(cat => {
-    const optgroup = document.createElement('optgroup');
-    optgroup.label = cat;
-
-    categoryMap[cat]
-      .sort((x, y) => x.name.localeCompare(y.name))
-      .forEach(item => {
-        const option = document.createElement('option');
-        option.value = item.id;       // keep id (filename without .json)
-        option.textContent = item.name;
-        optgroup.appendChild(option);
+      const categoryMap = {};
+      Object.keys(weapons).forEach(id => {
+        const w = weapons[id];
+        const cat = w.category || 'Uncategorized';
+        if (!categoryMap[cat]) categoryMap[cat] = [];
+        categoryMap[cat].push({ id, name: w.name });
       });
 
-    selectEl.appendChild(optgroup);
-  });
-}
+      Object.keys(categoryMap).sort().forEach(cat => {
+        const optgroup = document.createElement('optgroup');
+        optgroup.label = cat;
+        categoryMap[cat]
+          .sort((a, b) => a.name.localeCompare(b.name))
+          .forEach(item => {
+            const option = document.createElement('option');
+            option.value = item.id;
+            option.textContent = item.name;
+            optgroup.appendChild(option);
+          });
+        selectEl.appendChild(optgroup);
+      });
+    }
 
-// When selection changes, show stats using the weapons map
-selectEl.addEventListener('change', () => {
-  const selectedId = selectEl.value;
-  if (selectedId && weapons[selectedId]) {
-    const w = weapons[selectedId];
-    weaponName.textContent = w.name;
-    weaponCategory.textContent = `Category: ${w.category}`;
-    martialValue.textContent = w.martial;
-    masterValue.textContent = w.master;
-    masterPerkValue.textContent = w.masterPerk;
-    table.classList.remove('hidden');
-  } else {
-    weaponName.textContent = '';
-    weaponCategory.textContent = '';
-    martialValue.textContent = '';
-    masterValue.textContent = '';
-    masterPerkValue.textContent = '';
-    table.classList.add('hidden');
-  }
-});
+    selectEl.addEventListener('change', () => {
+      const selectedId = selectEl.value;
+      if (selectedId && weapons[selectedId]) {
+        const w = weapons[selectedId];
+        weaponName.textContent = w.name;
+        weaponCategory.textContent = `Category: ${w.category}`;
+        martialValue.innerHTML = addTooltips(w.martial);
+        masterValue.innerHTML = addTooltips(w.master);
+        masterPerkValue.innerHTML = addTooltips(w.masterPerk);
+        table.classList.remove('hidden');
+      } else {
+        weaponName.textContent = '';
+        weaponCategory.textContent = '';
+        martialValue.textContent = '';
+        masterValue.textContent = '';
+        masterPerkValue.textContent = '';
+        table.classList.add('hidden');
+      }
+    });
 
-// init
-initWeaponsDropdown();
-</script>
-
-
-
+    initWeaponsDropdown();
+  </script>
 </body>
 </html>
