@@ -238,6 +238,53 @@ dropdown.addEventListener('change', () => {
 
 loadManifest();
 </script>
+<select id="weaponDropdown">
+  <option value="">Select a weapon...</option>
+</select>
+
+<script>
+async function loadWeapons() {
+  try {
+    // Fetch the manifest generated automatically by the GitHub Action
+    const manifestResponse = await fetch('weapons/manifest.json');
+    const manifest = await manifestResponse.json();
+
+    // Group weapons by category
+    const categoryMap = {};
+
+    for (const filename of manifest) {
+      const response = await fetch(`weapons/${filename}`);
+      const weapon = await response.json();
+      if (!categoryMap[weapon.category]) categoryMap[weapon.category] = [];
+      categoryMap[weapon.category].push(weapon);
+    }
+
+    const dropdown = document.getElementById('weaponDropdown');
+    dropdown.innerHTML = '<option value="">Select a weapon...</option>';
+
+    // Sort categories and weapons alphabetically
+    Object.keys(categoryMap).sort().forEach(category => {
+      const optgroup = document.createElement('optgroup');
+      optgroup.label = category;
+
+      categoryMap[category]
+        .sort((a, b) => a.name.localeCompare(b.name))
+        .forEach(weapon => {
+          const option = document.createElement('option');
+          option.value = weapon.name;
+          option.textContent = weapon.name;
+          optgroup.appendChild(option);
+        });
+
+      dropdown.appendChild(optgroup);
+    });
+  } catch (err) {
+    console.error('Error loading weapons:', err);
+  }
+}
+
+loadWeapons();
+</script>
 
 
 </body>
