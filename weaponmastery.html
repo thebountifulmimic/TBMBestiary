@@ -98,7 +98,19 @@
       visibility: visible;
       opacity: 1;
     }
-
+@media (pointer: coarse) {
+  .tooltip .info-tooltip {
+    position: static;
+    visibility: hidden;
+    opacity: 0;
+    margin-top: 4px;
+    box-shadow: none;
+  }
+  .tooltip.show .info-tooltip {
+    visibility: visible;
+    opacity: 1;
+  }
+}
 
 h1 {
   text-align: center;
@@ -218,6 +230,28 @@ function createTooltip(word) {
     tooltipDiv.appendChild(infoDiv);
     return tooltipDiv;
 }
+ container.innerHTML = html;
+
+  // Mobile: tap-to-toggle tooltip
+  const isTouch = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+  if (isTouch) {
+    document.querySelectorAll('.tooltip').forEach(el => {
+      el.addEventListener('click', e => {
+        e.stopPropagation();
+        el.classList.toggle('show');
+      });
+    });
+
+    // Hide tooltip when tapping outside
+    document.addEventListener('click', () => {
+      document.querySelectorAll('.tooltip.show').forEach(el => el.classList.remove('show'));
+    });
+  }
+}
+
+// Run after DOM content loaded
+document.addEventListener('DOMContentLoaded', addTooltips);
+
 
     // --------------------------
     // Weapon Loader
