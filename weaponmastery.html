@@ -183,74 +183,57 @@ color: white;
   </div>
 
   <script>
-    // --------------------------
-    // Tooltip Dictionary
-    // --------------------------
-    const keywordInfo = {
-      "Brace": "As an Action you choose to Brace. On your turn, choose any targets you can see that are at least 20 feet away from you. If any one of those targets move within your weapon’s reach before your next turn, you can make one melee attack against it with your weapon, which uses your reaction. If the attack hits, treat the attack as a critical hit. While bracing, you cannot use a reaction. While bracing, if you move or are moved against your will, you forfeit the reaction until your next turn. A brace attack is not an Opportunity Attack.",
-      "Deflect": "If struck by a melee weapon attack, you can use your reaction to roll your weapon’s damage plus your Strength modifier, then subtract that total from the damage dealt to you for one attack. If you are dual wielding deflect weapons and you deflect one attack, you may deflect another attack as a free action on the same turn.",
-      "Disarm": "On hit, you can choose to deal only your Strength modifier in damage and force your enemy to roll a Strength or Dexterity Saving Throw. On a failure, it drops one held object of your choice.",
-      "Trip": "If your attack is successful, you can choose to deal only your Strength modifier in damage and your enemy must succeed on a Strength or Dexterity Saving Throw or be knocked prone.",
-      "Conceal": "You gain advantage on Sleight of Hand Checks made to conceal the weapon on your person.",
-      "Lunge": "If you use the attack action, you can use your reaction to lunge and increase your range by 5ft for all other attacks the rest of the turn.",
-      "Entangle": "On hit, you can choose to deal only your Strength modifier in damage and force the enemy to succeed on a Strength or Dexterity Saving Throw or be grappled.",
-      "Penetrate": "While attacking an enemy using a shield or wearing heavy armor, you can roll total damage from your weapon twice and take the better result.",
-      "Double Ended": "You make an additional attack as a bonus action using the damage listed if you are wielding your weapon with two hands."
-    };
+// --------------------------
+// Tooltip Dictionary
+// --------------------------
+const keywordInfo = {
+  "Brace": "As an Action you choose to Brace. On your turn, choose any targets you can see that are at least 20 feet away from you. If any one of those targets move within your weapon’s reach before your next turn, you can make one melee attack against it with your weapon, which uses your reaction. If the attack hits, treat the attack as a critical hit. While bracing, you cannot use a reaction. While bracing, if you move or are moved against your will, you forfeit the reaction until your next turn. A brace attack is not an Opportunity Attack.",
+  "Deflect": "If struck by a melee weapon attack, you can use your reaction to roll your weapon’s damage plus your Strength modifier, then subtract that total from the damage dealt to you for one attack.",
+  "Disarm": "On hit, you can choose to deal only your Strength modifier in damage and force your enemy to roll a Strength or Dexterity Saving Throw.",
+  "Trip": "If your attack is successful, you can choose to deal only your Strength modifier in damage and your enemy must succeed on a Strength or Dexterity Saving Throw or be knocked prone.",
+  "Conceal": "You gain advantage on Sleight of Hand Checks made to conceal the weapon on your person.",
+  "Lunge": "If you use the attack action, you can use your reaction to lunge and increase your range by 5ft for all other attacks the rest of the turn.",
+  "Entangle": "On hit, you can choose to deal only your Strength modifier in damage and force the enemy to succeed on a Strength or Dexterity Saving Throw or be grappled.",
+  "Penetrate": "While attacking an enemy using a shield or wearing heavy armor, you can roll total damage from your weapon twice and take the better result.",
+  "Double Ended": "You make an additional attack as a bonus action using the damage listed if you are wielding your weapon with two hands."
+};
 
-    function addTooltips(text) {
-      if (!text) return text;
-      let result = text;
-      for (const [keyword, definition] of Object.entries(keywordInfo)) {
-        const regex = new RegExp(`\\b${keyword}\\b`, 'gi');
-        result = result.replace(regex, match => `
-          <span class="tooltip">${match}
-            <div class="info-tooltip">
-              <strong>${keyword}:</strong><br>${definition}
-            </div>
-          </span>
-        `);
-      }
-      return result;
-    }
-	// --------------------------
-    // Bold Dictionary Letters
-    // --------------------------
-function createTooltip(word) {
-    const tooltipDiv = document.createElement('div');
-    tooltipDiv.classList.add('tooltip');
-    tooltipDiv.textContent = word; // this is what shows in the text
+// Function to convert text into tooltips
+function addTooltips(text) {
+  if (!text) return text;
+  let result = text;
 
-    const infoDiv = document.createElement('div');
-    infoDiv.classList.add('info-tooltip');
+  Object.keys(keywordInfo).forEach(word => {
+    const regex = new RegExp(`\\b${word}\\b`, 'g');
+    result = result.replace(regex, match => `
+      <span class="tooltip">${match}
+        <div class="info-tooltip"><strong>${word}:</strong> ${keywordInfo[word]}</div>
+      </span>
+    `);
+  });
 
-    // Wrap the dictionary word in <strong> inside the tooltip
-    infoDiv.innerHTML = `<strong>${word}:</strong> ${keywordInfo[word]}`;
-
-    tooltipDiv.appendChild(infoDiv);
-    return tooltipDiv;
+  return result;
 }
- container.innerHTML = html;
 
-  // Mobile: tap-to-toggle tooltip
+// Enable tap-to-toggle tooltips on mobile
+function enableMobileTooltips() {
   const isTouch = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
-  if (isTouch) {
-    document.querySelectorAll('.tooltip').forEach(el => {
-      el.addEventListener('click', e => {
-        e.stopPropagation();
-        el.classList.toggle('show');
-      });
-    });
+  if (!isTouch) return;
 
-    // Hide tooltip when tapping outside
-    document.addEventListener('click', () => {
-      document.querySelectorAll('.tooltip.show').forEach(el => el.classList.remove('show'));
+  document.querySelectorAll('.tooltip').forEach(el => {
+    el.addEventListener('click', e => {
+      e.stopPropagation();
+      el.classList.toggle('show');
     });
-  }
+  });
+
+  document.addEventListener('click', () => {
+    document.querySelectorAll('.tooltip.show').forEach(el => el.classList.remove('show'));
+  });
 }
 
-// Run after DOM content loaded
-document.addEventListener('DOMContentLoaded', addTooltips);
+// Call after DOM content loaded
+document.addEventListener('DOMContentLoaded', enableMobileTooltips);
 
 
     // --------------------------
