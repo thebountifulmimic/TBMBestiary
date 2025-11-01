@@ -74,7 +74,7 @@
       display: inline-block;
       cursor: help;
       color: #ffcc00;
-      font-weight: bold;
+      font-weight: normal;
     }
 
     .tooltip .info-tooltip {
@@ -201,6 +201,23 @@ color: white;
       }
       return result;
     }
+	// --------------------------
+    // Bold Dictionary Letters
+    // --------------------------
+function createTooltip(word) {
+    const tooltipDiv = document.createElement('div');
+    tooltipDiv.classList.add('tooltip');
+    tooltipDiv.textContent = word; // this is what shows in the text
+
+    const infoDiv = document.createElement('div');
+    infoDiv.classList.add('info-tooltip');
+
+    // Wrap the dictionary word in <strong> inside the tooltip
+    infoDiv.innerHTML = `<strong>${word}:</strong> ${keywordInfo[word]}`;
+
+    tooltipDiv.appendChild(infoDiv);
+    return tooltipDiv;
+}
 
     // --------------------------
     // Weapon Loader
