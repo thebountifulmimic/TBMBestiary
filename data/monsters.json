@@ -10435,6 +10435,126 @@
     "_displayName": "Choldrith"
   },
   {
+    "name": "Chuul (TBM)",
+    "tags": [
+      "large",
+      "aberration",
+      "cr4",
+      "The Bountiful Mimic"
+    ],
+    "size": "Large",
+    "type": "aberration",
+    "alignment": "chaotic evil",
+    "cr": "4 (1,100 XP)",
+    "hp": "93 (11d10+33)",
+    "ac": "16 (natural armor)",
+    "speed": "30 ft., swim 30 ft.",
+    "skills": "Perception +4",
+    "resistance": "slashing, psychic",
+    "senses": "darkvision 60 ft.",
+    "languages": "understands Deep Speech but can't speak",
+    "abilities": {
+      "str": 19,
+      "dex": 10,
+      "con": 16,
+      "int": 6,
+      "wis": 11,
+      "cha": 5
+    },
+    "traits": [
+      {
+        "name": "Amphibious",
+        "desc": "The chuul can breathe air and water."
+      },
+      {
+        "name": "Sense Magic",
+        "desc": "The chuul senses magic within 120 feet of it at will. This trait otherwise works like the detect magic spell but isn't itself magical."
+      },
+      {
+        "name": "Psychic Lure",
+        "desc": "As a reaction to a creature moving within 60 feet of the chuul, the chuul can psychically lure that creature. A creature lured this way must succeed a Wisdom saving throw (DC 13) or take 2d4 psychic damage and use the rest of its movement to move towards the chuul."
+      }
+    ],
+    "actions": [
+      {
+        "name": "Multiattack",
+        "desc": "The chuul makes two pincer attacks. If the chuul is grappling a creature, the chuul can also use its tentacles once."
+      },
+      {
+        "name": "Pincer",
+        "desc": "Melee Weapon Attack: +6 to hit, reach 10 ft., one target. Hit: 11 (2d6 + 4) bludgeoning damage. The target is grappled (escape DC 14) if it is a Large or smaller creature and the chuul doesn't have two other creatures grappled."
+      },
+      {
+        "name": "Tentacles",
+        "desc": "One creature grappled by the chuul must succeed on a DC 13 Constitution saving throw or be poisoned for 1 minute. Until this poison ends, the target is paralyzed. The target can repeat the saving throw at the end of each of its turns, ending the effect on itself on a success."
+      }
+    ],
+    "_file": "chuul (TBM).json",
+    "_displayName": "Chuul (TBM)"
+  },
+  {
+    "name": "Chuul Juggernaut",
+    "tags": [
+      "large",
+      "aberration",
+      "cr6",
+      "The Bountiful Mimic"
+    ],
+    "size": "Large",
+    "type": "aberration",
+    "alignment": "chaotic evil",
+    "cr": "4 (1,100 XP)",
+    "hp": "109 (13d10+39)",
+    "ac": "16 (natural armor)",
+    "speed": "30 ft., swim 30 ft.",
+    "skills": "Perception +4",
+    "resistance": "slashing, psychic",
+    "senses": "darkvision 60 ft.",
+    "languages": "understands Deep Speech but can't speak",
+    "abilities": {
+      "str": 22,
+      "dex": 10,
+      "con": 16,
+      "int": 6,
+      "wis": 11,
+      "cha": 5
+    },
+    "traits": [
+      {
+        "name": "Amphibious",
+        "desc": "The chuul can breathe air and water."
+      },
+      {
+        "name": "Sense Magic",
+        "desc": "The chuul senses magic within 120 feet of it at will. This trait otherwise works like the detect magic spell but isn't itself magical."
+      },
+      {
+        "name": "Psychic Lure",
+        "desc": "As a reaction to a creature moving within 60 feet of the chuul, the chuul can psychically lure that creature. A creature lured this way must succeed a Wisdom saving throw (DC 13) or take 2d4 psychic damage and use the rest of its movement to move towards the chuul."
+      },
+      {
+        "name": "Psychic Moan",
+        "desc": "Creatures within 20 feet of the Chuul have disadvantage on Wisdom saving throws and vulnerability to psychic damage."
+      }
+    ],
+    "actions": [
+      {
+        "name": "Multiattack",
+        "desc": "The chuul makes two pincer attacks. If the chuul is grappling a creature, the chuul can also use its tentacles once."
+      },
+      {
+        "name": "Pincer",
+        "desc": "Melee Weapon Attack: +8 to hit, reach 10 ft., one target. Hit: 16 (3d6 + 6) bludgeoning damage. The target is grappled (escape DC 16) if it is a Large or smaller creature and the chuul doesn't have two other creatures grappled."
+      },
+      {
+        "name": "Tentacles",
+        "desc": "One creature grappled by the chuul must succeed on a DC 13 Constitution saving throw or be poisoned for 1 minute. Until this poison ends, the target is paralyzed. The target can repeat the saving throw at the end of each of its turns, ending the effect on itself on a success."
+      }
+    ],
+    "_file": "chuul-juggernaut.json",
+    "_displayName": "Chuul Juggernaut"
+  },
+  {
     "name": "Chuul Spore Servant",
     "tags": [
       "large",
@@ -27858,6 +27978,10 @@
     "_displayName": "Imp"
   },
   [
+    {
+      "name": "Behir (TBM)",
+      "file": "Behir (TBM).json"
+    },
     {
       "name": "Remorhaz (TBM)",
       "file": "Remorhaz (TBM).json"
