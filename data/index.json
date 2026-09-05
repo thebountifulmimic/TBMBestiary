@@ -764,8 +764,12 @@
     "file": "choldrith.json"
   },
   {
-    "name": "chuul (TBM)",
+    "name": "Chuul (TBM)",
     "file": "chuul (TBM).json"
+  },
+  {
+    "name": "Chuul Juggernaut",
+    "file": "chuul-juggernaut.json"
   },
   {
     "name": "Chuul Spore Servant",
